@@ -3,23 +3,46 @@
 <head>
 	<meta charset="utf-8" />
 	
-	<title>okami dev tests</title>
+	<title>ink - okami parser</title>
 
-	<link type="text/css" href="com/main.css" rel="stylesheet" />
-	
-	<script type="text/javascript" src="com/parse.js"></script>
+	<link type="text/css" href="ink.css" rel="stylesheet" />
+
+	<script type="text/javascript" src="pak/jquery-1.6.4.min.js"></script>
+	<script type="text/javascript" src="pak/underscore.js"></script>
+
+
+			
+	<script type="text/javascript" src="com/parser.js"></script>
+	<script type="text/javascript" src="com/tokenizer.js"></script>
+	<script type="text/javascript" src="com/tabbing.js"></script>
+	<script type="text/javascript" src="com/tree.js"></script>
+	<script type="text/javascript" src="com/oline.js"></script>	
+	<script type="text/javascript" src="com/leaves.js"></script>
+	<script type="text/javascript" src="com/ini.js"></script>
+
 	
 </head>
 <body>
-	
-	<div id="titleBox">	
-		<h2>blok lang tests :: basic</h2>
+
+
+	<div id="logo_box">	
+		<h1>ink</h1>
 	</div>
+
+
+	<div id="parse_button">parse</div>
+
 	
-	<div id="testsBox">	
-		<div><a href="com/bloks/index.html">bloks</a></div>
-		<div><a href="com/okami/index.html">okami</a></div>
+	<div id="ink_box">
+		<textarea id="txa_source" spellcheck='false'></textarea>
 	</div>
+
+	
+	<div id="bits_box">
+			
+	</div>
+
+
 
 </body>
 </html>

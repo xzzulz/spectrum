@@ -1,6 +1,13 @@
+//
+// ink - okami parser
+//
+// tokenizer module
+//
+// this module breaks the source code into tokens
+//
 var tokenizer = function() {
 	
-	
+	// public
 	var pub = {}
 		
 	

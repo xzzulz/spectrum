@@ -1,9 +1,19 @@
+//
+// ink - okami parser
+//
+// tabbing module
+//
+// this module reads the tabs indentation tokens, 
+// and convert them into nested blocks of code
+// in the tree
+//
 var tabbing = function() {
-	
+
+	// public	
 	var pub = {}
 	
-	// input: tree of tokens
-	var tokens_tree
+	// input: lines of tokens
+	var lines
 	
 	// output
 	var tree = []
@@ -13,9 +23,9 @@ var tabbing = function() {
 	// process tabs in a tokens_tree, and 
 	// creates code blocks based on 
 	// indentation (tabs only)
-	pub.to_blocks = function( par_tokens_tree ) {
+	pub.to_blocks = function( par_tokenized ) {
 		
-		tokens_tree = par_tokens_tree
+		lines = par_tokenized.lines
 		
 		break_bloks()
 		
@@ -30,30 +40,29 @@ var tabbing = function() {
 	// indentation based
 	var break_bloks = function() {
 
-		var i, line = '';
+		var i, line = ''
 		
 		// tabs count, current tab level
-		var tabs, tab_lvl;
+		var tabs, tab_lvl
 				
 		// current path
 		// path of container bloks
-		var path = [];
+		var path = []
 		
 		// current blok
-		var blok = tree;
-		
+		var blok = tree
 		
 		//set starting tab level
 		tab_lvl = count_tabs( lines[0] )
 		// set the blok tabs level
-		blok.tabs = tab_lvl;
+		blok.tabs = tab_lvl
 				
 				
 		tabs = 0;
 		// for each line
 		for( i=0; i<lines.length; i++ ) {
-					
-			line = lines[i];
+			
+			line = lines[i]
 												
 			// count tabs at start of line
 			tabs = count_tabs( line )
@@ -62,17 +71,17 @@ var tabbing = function() {
 			if( tabs > tab_lvl ) {
 								
 				// set new tabs level
-				tab_lvl = tabs;
+				tab_lvl = tabs
 				
 				// create blok 
-				parent = blok;
-				blok = [];
+				parent = blok
+				blok = []
 				// add blok to parent
-				parent.push( blok );
+				parent.push( blok )
 				// add parent to containers path
-				path.push( parent );
+				path.push( parent )
 				// set the new blok tabs level				
-				blok.tabs = tabs;
+				blok.tabs = tabs
 			}
 
 
@@ -80,28 +89,28 @@ var tabbing = function() {
 			if( tabs < tab_lvl ) {
 				
 				// set new tabs level
-				tab_lvl = tabs;
+				tab_lvl = tabs
 								
 				// trackback tabs levels
-				while( path[ path.length - 1 ].tabs > tab_lvl ) path.pop();
+				while( path[ path.length - 1 ].tabs > tab_lvl ) path.pop()
 								
 				// new tab level == to some parent blok 
 				//	-> close bloks until that parent
 				if( path[ path.length - 1 ].tabs == tab_lvl ) {
-					blok = path.pop();
+					blok = path.pop()
 				
 				// new tab level != to some parent blok 
 				// invalid indentation
 				} else {
 						
-					console.log( 'invalid indentation at line ' + (i+1) );
-					return;				
+					console.log( 'invalid indentation at line ' + (i+1) )
+					return		
 				}
 							
 			}
 
 			// add line to current blok
-			blok.push( line );
+			blok.push( line )
 					
 		}
 

@@ -37,12 +37,13 @@ var parser = function() {
 		breakLines()
 		
 		// draw the tree
-		leaves.draw( tree )
+		leaves.draw( tree )	
 
+		tree = tokenizer.tokenize( tree )
+
+		// draw the tree
+		leaves.draw( tree )
 		
-		//tokens_tree = tokenizer.tokenize( lines )
-		
-		//console.log( tokens_tree )
 			
 		//tree = tabbing.to_blocks( tokens_tree )
 		
@@ -59,7 +60,7 @@ var parser = function() {
 		
 		for( var i=0; i<source_lines.length; i++ ) {
 			
-			var line = oline.new( i, source_lines[i] )
+			var line = o_line.new( i, source_lines[i] )
 			
 			var node = blue.tree.node( line )
 			tree.sub.add( node )

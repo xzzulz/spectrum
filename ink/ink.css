@@ -37,6 +37,7 @@ h1 {
 	padding: 5px;
 	border-radius: 10px;
 	box-shadow: #577e1b 5px 5px 0px;
+	color: #f1f3d5;
 }
 
 #bits_box {
@@ -50,6 +51,7 @@ h1 {
 	padding: 5px;
 	border-radius: 10px;
 	box-shadow: #218029 5px 5px 0px;
+	color: #c7e5a2;
 }
 
 #txa_source {
@@ -65,11 +67,10 @@ h1 {
 	color: #f1f3d5;
 	font: 16px Verdana, sans-serif; 
 }
+
 #txa_source:focus {
 	outline: 0px none transparent;
 }
-
-
 
 .node_box {
 	position: relative;
@@ -90,8 +91,8 @@ h1 {
 
 .node_label {
 	position: absolute;
-	top: 5px;
-	left: 60px;
+	top: 14px;
+	left: 56px;
 	right: 5px;
 	height: 36px;
 	/*background: #2bb384;*/
@@ -104,7 +105,6 @@ h1 {
 	height: 30px;
 	top: 160px;
 	right: 20px;
-	border: 1px solid #267d64;
 	border-radius: 12px;
 	box-shadow: #00775e 5px 5px 0px;
 	text-align: center;

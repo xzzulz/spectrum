@@ -69,20 +69,36 @@ blue.tree = function() {
 			return nod
 		}
 		
+		
 		// executes function func on all the tree
 		// nodes below (recursively)
-		nod.walk = function( func ) {
+		nod.walk = function( do_on_each ) {
 			
 			var node = nod.sub.first
+			
 			while( node ) {
-				func( node )
+				do_on_each( node )
 				
 				if( node.sub.n > 0 )
-					nod.walk( node )
+					node.walk( do_on_each )
 					
 				node = node.next
 			}
 			
+		}
+
+
+		// returns an array with references to all nodes in tree
+		nod.flat = function() {
+			
+			var flat = []
+			
+			var grab = function( node ) {
+				flat.push( node )
+			}
+			nod.walk( grab )
+			
+			return flat
 		}
 		
 		
@@ -174,11 +190,11 @@ blue.tree = function() {
 		
 		// executes function "func" on each direct 
 		// sub node (not recursive)
-		pub.each = function( func ) {
+		pub.each = function( do_on_each ) {
 			
 			var node = pub.first
 			while( node ) {
-				func( node )
+				do_on_each( node )
 				node = node.next
 			}
 			

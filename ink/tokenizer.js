@@ -11,12 +11,22 @@ var tokenizer = function() {
 	var pub = {}
 		
 	
-	pub.tokenize = function( par_lines ) {
+	pub.tokenize = function( par_tree ) {
 		
-		lines = par_lines
-		walk_lines()
-			
-		return( tokens_tree )
+		//lines = par_lines
+		tree = par_tree
+		
+		var flat = tree.flat()
+		
+		// call break_tokens on each tree node
+		//tree.walk( break_tokens )
+		for(var i=0; i<flat.length; i++ ) {
+			console.log( 'node: ' + i)
+			break_tokens( flat[i] )
+		}
+		
+		console.log( 'tokenize end')
+		return( tree )
 	}
 	
 	
@@ -28,44 +38,10 @@ var tokenizer = function() {
 
 	
 	// source lines list
-	var lines = null
+	//var lines = null
+	var tree
 	
 	
-	// tokens tree
-	// example:
-	// tokens_tree.lines[ 24 ].tokens[ 2 ] = 'one'
-	var tokens_tree = {}
-	
-	// lines list
-	tokens_tree.lines = []
-	
-	
-	
-	
-	
-	// walk the lines list, and call breakTokens
-	// on each one
-	var walk_lines = function() {
-		
-				
-		// for each source line
-		for( i=0; i<lines.length; i++ ) {				
-			
-			// ignore empty or comment lines
-			if( is_not_code( lines[ i ] ) ) 
-				continue
-			
-			// create a line in the token tree
-			tokens_tree.lines[ i ] = {}
-			tokens_tree.lines[ i ].tokens = []
-			// line number from source
-			tokens_tree.lines[ i ].sourceLine = i
-			
-			// tokenize the line
-			break_tokens( lines[i], i )
-		}
-		
-	}
 	
 	
 	
@@ -81,51 +57,100 @@ var tokenizer = function() {
 	
 	
 	
-	
-	
-	
 	//
-	var match, from, search
-	//
-	var break_tokens = function( line, line_number ) {
+	var break_tokens = function( node ) {
+		
+		var match, from, to, continue_searching
+		
+		console.log( 'break_tokens ==========================' )
+		
+		
+		// get data from tree node
+		var o_line = node.item
+		
+		console.log( 'o_line' )
+		console.dir( o_line )
+		
+		var source = o_line.source
+		var line_number = o_line.number
+		
+		// ignore empty or comment lines
+		if( is_not_code( source ) )
+			return 
+		
+		console.log( 'source line: ' + source )
+		
 				
 		from = 0
-		search = true
-		while( search ) {
+		continue_searching = true
+		while( continue_searching ) {
 			
-			match = rgx_tokens.exec( line )
+			match = rgx_tokens.exec( source )
 			
-			// check spacing for invalid syntax.
-			// between previous point, and current token match
-			// position, or end of line
-			if( match )
-				check_spacing( match, from, line, line_number )
-			else
-				check_rest( line_number, from )
+			
+			// if token found
+			if( match ) {
 				
-			// update from
-			from = rgx_tokens.lastIndex
+				to = match.index
 
-			
-			if( match )
-				add_token( match[0], line_number )
-			else
-				search = false
+				// check filling space for invalid syntax.
+				// between previous point, and current token match
+				// position, or end of line
+				check_spacing( from, to, source, line_number )
+				
+				// add token to tree
+				add_token( node, match[0], line_number, from, to )
+				
+				// update from
+				from = rgx_tokens.lastIndex
+				
+			} else {
+				// check remaining of source code 
+				// for invalid syntax
+				check_rest( source, line_number, from )
+				
+				// search of this line is completed
+				continue_searching = false
+			}
+
+
 		}
 		
+	}	
+	
+	
+	
+	// add token
+	var add_token = function( node, token_string, line_number, from, to ) {
+		
+		console.log( 'add_token: ' + token_string + ' into:' )
+		console.dir( node )
+		
+		
+		var bit = o_bit.new()
+		
+		bit.string = token_string
+		
+		// data for original position in source code
+		bit.source.line = line_number
+		bit.source.from = from
+		bit.source.to = to 
+		
+		var bit_node = blue.tree.node( bit )
+		
+		node.sub.add( bit_node )
 	}
-
-
+	
+		
 
 	// check spacing characters between tokens, for
 	// invalid syntax
-	var spacing
 	//
-	var check_spacing = function( match, from, line, line_number ) {
-		
+	//var check_spacing = function( match, from, line, line_number ) {
+	var check_spacing = function( from, to, line, line_number ) {	
 		// check spacing for invalid syntax
 		// between previous position and token found
-		spacing = line.substring( from, match.index )
+		var spacing = line.substring( from, to )
 
 		// test for invalid spacing syntax
 		if( rgx_invalid_spacing.test( spacing ) ) {
@@ -138,12 +163,20 @@ var tokenizer = function() {
 	
 
 
-	var rest
 	// check the ending part of the line
 	// for valid syntax
-	var check_rest = function( line_number, from ) {
+	var check_rest = function( source, line_number, from ) {
 		
-		rest = lines[ line_number ].substring( from )
+		var rest
+		
+		console.log( 'check rest ::' )
+		console.log( 'source to check: ' )
+		console.log( source )
+		console.log( 'from: ' + from )
+		
+		rest = source.substring( from )
+		
+		console.log( 'rest: ' + rest )
 		
 		// return if valid line ending
 		if( rgx_valid_ending.test( rest ) ) 
@@ -156,16 +189,7 @@ var tokenizer = function() {
 	}
 
 
-
-
-	// add token
-	var add_token = function( token, line_number ) {
 		
-		tokens_tree.lines[ line_number ].tokens.push( token )
-	}
-
-	
-	
 	return pub
 	
 }()

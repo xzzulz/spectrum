@@ -1,6 +1,6 @@
 
 
-var oline = function() {
+var o_line = function() {
 	
 	// public space
 	var pub = {}

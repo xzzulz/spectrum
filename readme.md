@@ -5,6 +5,14 @@ v0.1
 
 A parser for simple expressions grammars.
 
+MIT license.
+
+## status
+
+tokenize phase partially working
+view it at [nzonbi.github.com/ink](http://nzonbi.github.com/ink)
+
+
 ## Simple expressions grammar
 
 A simple expressions grammar is a grammar defined in identities and operators. 

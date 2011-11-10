@@ -1,0 +1,19 @@
+:: bloks lang
+::
+:: a test grammar with indentation
+:: based blocks
+
+ 
+:: tokens
+
+token: ([a-zA-Z0-9]+)[^a-zA-Z0-9]
+
+top: \+
+
+:: indentation whitespace
+
+_in: ^(\w)+\W+
+
+:: separation whitespace
+
+_: [^w](w)+[^w]

@@ -90,7 +90,7 @@ var tokenizer = function() {
 				// check filling space for invalid syntax.
 				// between previous point, and current token match
 				// position, or end of line
-				check_spacing( from, to, source, line_number )
+				check_spacing( from, to, source, line_number, node )
 								
 				// add token to tree
 				add_token( node, match[0], line_number, from, to )
@@ -101,7 +101,7 @@ var tokenizer = function() {
 			} else {
 				// check remaining of source code 
 				// for invalid syntax
-				check_rest( source, line_number, from )
+				check_rest( source, line_number, from, node )
 				
 				// search of this line is completed
 				continue_searching = false
@@ -140,7 +140,7 @@ var tokenizer = function() {
 	// invalid syntax
 	//
 	//var check_spacing = function( match, from, line, line_number ) {
-	var check_spacing = function( from, to, line, line_number ) {	
+	var check_spacing = function( from, to, line, line_number, node ) {	
 		// check spacing for invalid syntax
 		// between previous position and token found
 		var spacing = line.substring( from, to )
@@ -148,8 +148,18 @@ var tokenizer = function() {
 		// test for invalid spacing syntax
 		if( rgx_invalid_spacing.test( spacing ) ) {
 			// invalid syntax found
-			console.log( 'invalid syntax at line: ' + line_number )
-			console.log( 'syntax: ' + spacing )
+			//console.log( 'invalid syntax at line: ' + line_number )
+			//console.log( 'syntax: ' + spacing )
+			
+			//insert error node
+			var bit = o_bit.new()
+			bit.type = "bit error"
+			bit.source.line = line_number
+			bit.source.from = from
+			bit.source.to = to
+			bit.bit = spacing
+			
+			node.sub.add( blue.tree.node( bit ) )
 		}		
 		
 	}
@@ -158,7 +168,7 @@ var tokenizer = function() {
 
 	// check the ending part of the line
 	// for valid syntax
-	var check_rest = function( source, line_number, from ) {
+	var check_rest = function( source, line_number, from, node ) {
 		
 		var rest
 
@@ -170,8 +180,18 @@ var tokenizer = function() {
 			return
 		
 		// else error
-		console.log( 'invalid syntax at line: ' + line_number )
-		console.log( 'syntax: ' + rest )	
+		//console.log( 'invalid syntax at line: ' + line_number )
+		//console.log( 'syntax: ' + rest )	
+		
+		//insert error node
+		var bit = o_bit.new()
+		bit.type = "bit error"
+		bit.source.line = line_number
+		bit.source.from = from
+		bit.source.to = source.length - 1
+		bit.bit = rest
+		
+		node.sub.add( blue.tree.node( bit ) )
 		
 	}
 

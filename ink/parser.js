@@ -26,6 +26,10 @@ var parser = function() {
 		
 		pub.source = source
 		
+		
+		console.log( source )
+		
+		
 		// create tree top node
 		tree = pub.tree = blue.tree.node( 'root' )
 		
@@ -38,10 +42,19 @@ var parser = function() {
 		
 		// draw the tree
 		//leaves.draw( tree )	
-
-
-
+		
+		console.log( '=============================================' )
+		console.log( tree )
+		console.log( '=============================================' )
+		
+		
 		tree = tokenizer.tokenize( tree )
+
+
+		console.log( '=============================================' )
+		console.log( tree )
+		console.log( '=============================================' )
+
 
 		// draw the tree
 		leaves.draw( tree )

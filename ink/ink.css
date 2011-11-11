@@ -38,7 +38,8 @@ h1 {
 	border-radius: 10px;
 	box-shadow: #577e1b 5px 5px 0px;
 	color: #f1f3d5;
-	font: 18px "Ubuntu Mono", Monospace, Verdana, sans-serif;
+	font: 18px profontwindows, inconsolata, "ubuntu mono", monofur,  Monospace, Verdana, sans;
+	line-height: 120%;
 	white-space: pre-wrap;
 	-moz-tab-size: 4;
     -o-tab-size: 4;
@@ -67,6 +68,7 @@ h1 {
 	background-color: #4a9f51;
 	border-radius: 10px;
 	box-shadow: #218029 5px 5px 0px;
+	font: 15px profontwindows, inconsolata, "ubuntu mono", monofur,  Monospace, Verdana, sans;
 	color: #c7e5a2;
 }
 
@@ -103,11 +105,11 @@ h1 {
 /* visualization for bits node */
 .bit_box {
 	display: inline-block;
-	width: 60px;
+	width: 50px;
 }
 .bit {
 	position: static;
-	margin: 0px 0px 10px 10px;
+	margin: 0px 8px 5px 6px;
 	width: 36px;
 	height: 36px;
 	background: #39ba6a;
@@ -115,10 +117,18 @@ h1 {
 	box-shadow: #219073 5px 5px 0px;
 }
 
+.bit_error {
+	position: static;
+	margin: 0px 8px 5px 6px;
+	width: 36px;
+	height: 36px;
+	background: #ba7539;
+	border-radius: 10px;
+	box-shadow: #b26033 5px 5px 0px;
+}
+
 .bit_label {
 	text-align: center;
-
-	/*background: #2bb384;*/
 }
 
 

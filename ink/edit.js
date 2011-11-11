@@ -64,7 +64,7 @@ var edit = function() {
 	// element. instead, insert tab character
 	var keypress = function( e ) {
 		
-		
+		// insert tab on tab key
 		if( e.keyCode != 9 ) return
 			
 		e.preventDefault()
@@ -86,7 +86,13 @@ var edit = function() {
 		
 	}
 	
-	
+
+	var insert_char_at_caret = function() {
+		
+		
+	}
+
+
 	
 	return pub
 }()

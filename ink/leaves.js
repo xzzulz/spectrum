@@ -25,38 +25,78 @@ var leaves = function() {
 	
 	// draws the tree in the view
 	pub.draw = function( tree ) {
-		
+				
 		$( view.html_box ).empty()
 		
 		tree.walk( paint_node )
 	}
 	
+		
 	
-	
-	// the id value is incremented with each view
-	// node that is creatre
-	var id = 0
+
 	
 	
 	var paint_node = function( node ) {
+		
+		console.log( 'paint node' )
+		console.log( 'node.item.id: ' + node.item.id )
+		console.log( 'node.item.type: ' + node.item.type )
+		console.log( 'node.top: ' + node.top.item )
+		
+		
+		if( node.top.item == 'root' ) {	
+			// node is a line
+			var label = node.item.source
+			var id = node.item.id
 					
-		var html = '<div id="node_box_{id}" class="node_box">'
-		+ '<div id="node_{id}" class="node"></div>'
-		+ '<div id="node_label_{id}" class="node_label">{label}</div>'
-		+ '</div>'
+			// html for line node
+			var html = '<div id="box_{id}" class="line_box">'
+			+ '<div id="node_{id}" class="line_node"></div>'
+			+ '<div id="node_label_{id}" class="line_node_label">{label}</div>'
+			+ '<div class="line_sub_box"></div>'
+			+ '</div>'
+			
+			// assign the id and label
+			html = html
+				.replace( '{id}', id )
+				.replace( '{id}', id )
+				.replace( '{id}', id )
+				.replace( '{label}', label )
 		
-		var label = node.item.source
+		} else {
+			// node is a bit
+			var bit = node.item.bit
+			var id = node.item.id
+			
+			console.log( 'node.bit: ' + node.bit )
+			
+			// html for bit node
+			var html = '<div id="box_{id}" class="bit_box">'
+			+ '<div id="node_{id}" class="bit"></div>'
+			+ '<div id="node_label_{id}" class="bit_label">{bit}</div>'
+			+ '</div>'
+			
+			// assign the id and label
+			html = html
+				.replace( '{id}', id )
+				.replace( '{id}', id )
+				.replace( '{id}', id )
+				.replace( '{bit}', bit )
+				
+		}
 		
-		// assign the id 
-		html = html
-			.replace( '{id}', id )
-			.replace( '{id}', id )
-			.replace( '{id}', id )
-			.replace( '{label}', label )
 		
-		id++
 
-		$( html ).appendTo( view.html_box )
+		
+		if( node.top.item == 'root' )
+			// append to root node
+			$( html ).appendTo( view.html_box )
+		else {
+			// append to top line node
+			var top_node_id = '#box_' + node.top.item.id + ' .line_sub_box'
+			$( html ).appendTo( $( top_node_id ) )
+		}
+		
 		
 	}
 

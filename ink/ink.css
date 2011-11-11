@@ -27,58 +27,57 @@ h1 {
 
 
 #ink_box {
-	position: absolute;
-	left: 20px;
-	top: 20px;
-	bottom: 20px;
-	width: 410px;
+	float: left;
+	width: 180px;
+	height: 180px;
+	margin: 20px 0px 20px 20px;
 	overflow: auto;
 	background-color: #88ae4e;
-	padding: 5px;
+	padding: 15px;
+	overflow: auto;
 	border-radius: 10px;
 	box-shadow: #577e1b 5px 5px 0px;
 	color: #f1f3d5;
+	font: 18px "Ubuntu Mono", Monospace, Verdana, sans-serif;
+	white-space: pre-wrap;
+	-moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+}
+#ink_box:focus {
+	outline: 0px none transparent;
+}
+
+#panel_box {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	right: 120px;
+	bottom: 0px;
+
 }
 
 #bits_box {
-	position: absolute;
-	right: 140px;
-	top: 20px;
-	bottom: 20px;
-	width: 410px;
+	float: left;
+	width: 200px;
+	height: 200px;
+	margin: 20px;
+	padding: 5px;
 	overflow: auto;
 	background-color: #4a9f51;
-	padding: 5px;
 	border-radius: 10px;
 	box-shadow: #218029 5px 5px 0px;
 	color: #c7e5a2;
 }
 
-#txa_source {
-	position: absolute;
-	top: 10px;
-	left: 10px;
-	right: 10px;
-	bottom: 10px;
-	background-color: transparent;
-    border-style: none; 
-    border-color: Transparent; 
-    overflow: auto;
-	color: #f1f3d5;
-	font: 16px Verdana, sans-serif; 
-}
-
-#txa_source:focus {
-	outline: 0px none transparent;
-}
-
-.node_box {
+.line_box {
 	position: relative;
-	height: 46px;
+	/*height: 46px;*/
 	/*background: #7ca;*/
 }
 
-.node {
+/* visualization for line node */
+.line_node {
 	position: absolute;
 	top: 5px;
 	left: 10px;
@@ -89,13 +88,54 @@ h1 {
 	box-shadow: #219073 5px 5px 0px;
 }
 
-.node_label {
-	position: absolute;
-	top: 14px;
-	left: 56px;
-	right: 5px;
-	height: 36px;
+.line_node_label {
+	padding-top: 14px;
+	padding-left: 56px;
+	padding-right: 5px;
+	height: 46px;
 	/*background: #2bb384;*/
+}
+.line_sub_box {
+	padding-left: 50px;
+}
+
+
+/* visualization for bits node */
+.bit_box {
+	display: inline-block;
+	width: 60px;
+}
+.bit {
+	position: static;
+	margin: 0px 0px 10px 10px;
+	width: 36px;
+	height: 36px;
+	background: #39ba6a;
+	border-radius: 10px;
+	box-shadow: #219073 5px 5px 0px;
+}
+
+.bit_label {
+	text-align: center;
+
+	/*background: #2bb384;*/
+}
+
+
+#edit_button {
+	position: absolute;
+	width: 100px;
+	height: 30px;
+	top: 220px;
+	right: 20px;
+	border-radius: 12px;
+	box-shadow: #00775e 5px 5px 0px;
+	text-align: center;
+	padding-top:11px;
+	font: bold 14px Verdana;
+	color: #d2e3b9;
+	cursor: hand;
+	cursor: pointer;
 }
 
 

@@ -9,6 +9,10 @@ var o_line = function() {
 	
 		var lin = {}
 		
+		lin.type = "line"
+		
+		lin.id = 'l' + id++
+		
 		// line number from source code
 		// zero base
 		lin.number = number
@@ -24,7 +28,7 @@ var o_line = function() {
 	
 	}
 
-
+	var id = 0
 
 	return pub
 	

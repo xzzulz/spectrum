@@ -21,11 +21,11 @@ var tokenizer = function() {
 		// call break_tokens on each tree node
 		//tree.walk( break_tokens )
 		for(var i=0; i<flat.length; i++ ) {
-			console.log( 'node: ' + i)
+
 			break_tokens( flat[i] )
 		}
 		
-		console.log( 'tokenize end')
+
 		return( tree )
 	}
 	
@@ -62,24 +62,18 @@ var tokenizer = function() {
 		
 		var match, from, to, continue_searching
 		
-		console.log( 'break_tokens ==========================' )
-		
-		
+
 		// get data from tree node
 		var o_line = node.item
 		
-		console.log( 'o_line' )
-		console.dir( o_line )
-		
+
 		var source = o_line.source
 		var line_number = o_line.number
 		
 		// ignore empty or comment lines
 		if( is_not_code( source ) )
 			return 
-		
-		console.log( 'source line: ' + source )
-		
+	
 				
 		from = 0
 		continue_searching = true
@@ -123,10 +117,6 @@ var tokenizer = function() {
 	// add token
 	var add_token = function( node, token_string, line_number, from, to ) {
 		
-		console.log( 'add_token: ' + token_string + ' into:' )
-		console.dir( node )
-		
-		
 		var bit = o_bit.new()
 		
 		bit.string = token_string
@@ -168,15 +158,9 @@ var tokenizer = function() {
 	var check_rest = function( source, line_number, from ) {
 		
 		var rest
-		
-		console.log( 'check rest ::' )
-		console.log( 'source to check: ' )
-		console.log( source )
-		console.log( 'from: ' + from )
-		
+
 		rest = source.substring( from )
 		
-		console.log( 'rest: ' + rest )
 		
 		// return if valid line ending
 		if( rgx_valid_ending.test( rest ) ) 

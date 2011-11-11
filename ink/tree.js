@@ -53,7 +53,7 @@ blue.tree = function() {
 		// removes the node form its tree.
 		// returns the node.
 		nod.rip = function() {
-						
+			
 			if( ! nod.top ) return nod
 			
 			if( nod.next )
@@ -61,7 +61,14 @@ blue.tree = function() {
 			if( nod.prev )
 				nod.prev.next = nod.next
 							
+			if( nod.top.sub.last == nod	)
+				nod.top.sub.last = nod.prev
+
+			if( nod.top.sub.first == nod )
+				nod.top.sub.first = nod.next
+			
 			nod.top.sub.n--
+			
 			nod.top = null
 			nod.next = null
 			nod.prev = null

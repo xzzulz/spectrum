@@ -27,7 +27,7 @@ var parser = function() {
 		pub.source = source
 		
 		// create tree top node
-		tree = pub.tree = blue.tree.node( 'top' )
+		tree = pub.tree = blue.tree.node( 'root' )
 		
 		
 		// set view html container for nodes
@@ -37,7 +37,9 @@ var parser = function() {
 		breakLines()
 		
 		// draw the tree
-		leaves.draw( tree )	
+		//leaves.draw( tree )	
+
+
 
 		tree = tokenizer.tokenize( tree )
 
@@ -67,7 +69,10 @@ var parser = function() {
 			
 		}	
 		
-		
+		// remove trailing empty nodes
+		while( tree.sub.last.item.source == '' ) {
+			tree.sub.last.rip()
+		}
 	}
 
 

@@ -11,7 +11,7 @@ var o_line = function() {
 		
 		lin.type = "line"
 		
-		lin.id = id++
+		lin.id = 'l' + id++
 		
 		// line number from source code
 		// zero base

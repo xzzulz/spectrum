@@ -25,36 +25,31 @@ var leaves = function() {
 	
 	// draws the tree in the view
 	pub.draw = function( tree ) {
-		
+				
 		$( view.html_box ).empty()
 		
 		tree.walk( paint_node )
 	}
 	
-	/*
-	var do_node = function( node ) {
-		
-		paint_node( node )
-		
-		if( node.sub.n > 0 )
-			
-	}
-	*/
 		
 	
-	// the id value is incremented with each view
-	// node that is created
-	var id = 0
+
 	
 	
 	var paint_node = function( node ) {
-					
-		var html = '<div id="node_box_{id}" class="node_box">'
+		
+		console.log( 'paint node' )
+		console.log( 'node.item.id: ' + node.item.id )
+		console.log( 'node.item.type: ' + node.item.type )
+		console.log( 'node.top: ' + node.top.item )
+				
+		var html = '<div id="box_{id}" class="node_box">'
 		+ '<div id="node_{id}" class="node"></div>'
 		+ '<div id="node_label_{id}" class="node_label">{label}</div>'
 		+ '</div>'
 		
 		var label = node.item.source
+		var id = node.item.id
 		
 		// assign the id 
 		html = html
@@ -64,8 +59,16 @@ var leaves = function() {
 			.replace( '{label}', label )
 		
 		id++
-
-		$( html ).appendTo( view.html_box )
+		
+		// append to top node
+		if( node.top.item == 'root' )
+			$( html ).appendTo( view.html_box )
+		else {
+			var top_node_id = '#box_' + node.top.item.id
+			console.log( 'append to: ' + top_node_id )
+			$( html ).appendTo( $( top_node_id ) )
+		}
+		
 		
 	}
 

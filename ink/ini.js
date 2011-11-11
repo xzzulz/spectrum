@@ -14,21 +14,19 @@ ini.source = ''
 
 ini.start = function() {
 	
-	// set some source code
-	//$('#ink_box').html( ini.source );
+	// init the micro text editor
 	edit.ini()
 	
 	// conect parse button
 	$('#parse_button').click( ini.parse );
-	
-	// conect edit button
-	$('#edit_button').click( edit.action );
+
 	
 }
 $( window ).load( ini.start )
 
 
-
+// function to parse the source code
+// will be called on parse button click
 ini.parse = function() {
 	
 	var source = $('#ink_box').val();

@@ -1,88 +1,93 @@
-var edit = {}
-
-
-edit.source = ''
-+ 'one\n'
-+ 'two three\n'
-+ 'one four\n'
-+ '	five\n'
-+ '	six\n'
-+ '	two four\n'
-+ 'three\n';
-
-
-
-edit.ini = function() {
+// micro text editor
+var edit = function() {
 	
-	// set some source code
-	$('#ink_box').html(  ini.source  );
-	
-	// handle key press
-	$('#ink_box').keydown( edit.keypress )
-	
-}
+	// public
+	var pub = {}
 
 
 
-// if tab is pressed, prevent jumping to next
-// element. instead, insert tab character
-edit.keypress = function( e ) {
-	
-	
-	if( e.keyCode != 9 ) return
+	var source = ''
+	+ 'one\n'
+	+ 'two three\n'
+	+ 'one four\n'
+	+ '	five\n'
+	+ '	six\n'
+	+ '	two four\n'
+	+ 'three\n';
+
+
+
+	pub.ini = function() {
 		
-	e.preventDefault()
+		// set some source code
+		$('#ink_box').html(  source  );
+		
+		// handle key press
+		$('#ink_box').keydown( keypress )
+		
+		document.execCommand("enableObjectResizing", false, false);
+		
+		
+		getViewSize()
+		resize_panels()
+	}
+
 	
-	var sel = window.getSelection()	
-
-	var offset = sel.anchorOffset
-	var htmlnode = sel.anchorNode
-	var text = htmlnode.textContent
-	var prev = text.substring(0,offset)
-	var post = text.substring(offset)
-	htmlnode.textContent = prev + '\t' + post
-	
-	var range = document.createRange();
-	range.setStart(htmlnode, offset+1);
-	range.collapse(true);
-	sel.removeAllRanges();
-	sel.addRange(range);
-	
-}
-
-
-
-
-
-edit.action = function( e ) {
-	
-	console.log('action')
-	
-	getCaretPosition()	
+	var view = { width: 0, height: 0 }
 	
 
-}
+	var getViewSize = function() {
+		
+		view.width = $( window ).width();
+		view.height = $( window ).height();
+		
+	}
 
 
-/*
-edit.nl_to_div = function( text ) {
+	var resize_panels = function() {
+		
+		var panel_width = Math.round( (view.width - 90 - 120 ) / 2 )
+		
+		$('#ink_box').css( 'width', panel_width - 20  )
+		$('#bits_box').css( 'width', panel_width  )
+		
+				
+		var panel_height = Math.round( view.height - 60 )
+		
+		$('#ink_box').css( 'height', panel_height - 20  )
+		$('#bits_box').css( 'height', panel_height  )
+		
+	}
 
-	var rgx = /(.*)\n/g
-	var from, to, res
-	
-	while(  res = rgx.exec( text )  ) {
-		from = res.index	// first char
-		to = rgx.lastIndex	// char after last char
 
-		prev = text.substring( 0, from )
-		post = text.substring( to )
+	// if tab is pressed, prevent jumping to next
+	// element. instead, insert tab character
+	var keypress = function( e ) {
+		
+		
+		if( e.keyCode != 9 ) return
+			
+		e.preventDefault()
+		
+		var sel = window.getSelection()	
 
-		text = prev + '<div>' + res[1] + '</div>' + post
-
-		rgx.lastIndex += 10
+		var offset = sel.anchorOffset
+		var htmlnode = sel.anchorNode
+		var text = htmlnode.textContent
+		var prev = text.substring(0,offset)
+		var post = text.substring(offset)
+		htmlnode.textContent = prev + '\t' + post
+		
+		var range = document.createRange();
+		range.setStart(htmlnode, offset+1);
+		range.collapse(true);
+		sel.removeAllRanges();
+		sel.addRange(range);
 		
 	}
 	
-	return text
-}
-*/
+	
+	
+	return pub
+}()
+

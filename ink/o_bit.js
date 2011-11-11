@@ -9,7 +9,9 @@ var o_bit = function() {
 	
 		var bit = {}
 		
-		bit.string
+		bit.type = "bit"
+		
+		bit.id = id++
 		
 		// namespace for things related to the 
 		// original source code
@@ -26,8 +28,8 @@ var o_bit = function() {
 		return bit
 	
 	}
-
-
+	
+	var id = 0
 
 	return pub
 	

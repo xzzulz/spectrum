@@ -34,10 +34,15 @@ h1 {
 	width: 410px;
 	overflow: auto;
 	background-color: #88ae4e;
-	padding: 5px;
+	padding: 15px;
+	overflow: auto;
 	border-radius: 10px;
 	box-shadow: #577e1b 5px 5px 0px;
 	color: #f1f3d5;
+	white-space: pre-wrap;
+}
+#ink_box:focus {
+	outline: 0px none transparent;
 }
 
 #bits_box {
@@ -52,24 +57,6 @@ h1 {
 	border-radius: 10px;
 	box-shadow: #218029 5px 5px 0px;
 	color: #c7e5a2;
-}
-
-#txa_source {
-	position: absolute;
-	top: 10px;
-	left: 10px;
-	right: 10px;
-	bottom: 10px;
-	background-color: transparent;
-    border-style: none; 
-    border-color: Transparent; 
-    overflow: auto;
-	color: #f1f3d5;
-	font: 16px Verdana, sans-serif; 
-}
-
-#txa_source:focus {
-	outline: 0px none transparent;
 }
 
 .node_box {
@@ -96,6 +83,23 @@ h1 {
 	right: 5px;
 	height: 36px;
 	/*background: #2bb384;*/
+}
+
+
+#edit_button {
+	position: absolute;
+	width: 100px;
+	height: 30px;
+	top: 220px;
+	right: 20px;
+	border-radius: 12px;
+	box-shadow: #00775e 5px 5px 0px;
+	text-align: center;
+	padding-top:11px;
+	font: bold 14px Verdana;
+	color: #d2e3b9;
+	cursor: hand;
+	cursor: pointer;
 }
 
 

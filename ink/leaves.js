@@ -31,10 +31,19 @@ var leaves = function() {
 		tree.walk( paint_node )
 	}
 	
-	
+	/*
+	var do_node = function( node ) {
+		
+		paint_node( node )
+		
+		if( node.sub.n > 0 )
+			
+	}
+	*/
+		
 	
 	// the id value is incremented with each view
-	// node that is creatre
+	// node that is created
 	var id = 0
 	
 	

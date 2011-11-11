@@ -15,10 +15,14 @@ ini.source = ''
 ini.start = function() {
 	
 	// set some source code
-	$('#txa_source').val( ini.source );
+	//$('#ink_box').html( ini.source );
+	edit.ini()
 	
 	// conect parse button
 	$('#parse_button').click( ini.parse );
+	
+	// conect edit button
+	$('#edit_button').click( edit.action );
 	
 }
 $( window ).load( ini.start )
@@ -27,7 +31,7 @@ $( window ).load( ini.start )
 
 ini.parse = function() {
 	
-	var source = $('#txa_source').val();
+	var source = $('#ink_box').val();
 	
 	parser.parse( source );
 	

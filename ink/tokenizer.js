@@ -91,7 +91,7 @@ var tokenizer = function() {
 				// between previous point, and current token match
 				// position, or end of line
 				check_spacing( from, to, source, line_number )
-				
+								
 				// add token to tree
 				add_token( node, match[0], line_number, from, to )
 				
@@ -119,8 +119,11 @@ var tokenizer = function() {
 		
 		var bit = o_bit.new()
 		
-		bit.string = token_string
-		
+		if( token_string == '\t' )
+			token_string = 'tab'
+			
+		bit.bit = token_string
+				
 		// data for original position in source code
 		bit.source.line = line_number
 		bit.source.from = from

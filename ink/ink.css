@@ -70,13 +70,14 @@ h1 {
 	color: #c7e5a2;
 }
 
-.node_box {
+.line_box {
 	position: relative;
-	height: 46px;
+	/*height: 46px;*/
 	/*background: #7ca;*/
 }
 
-.node {
+/* visualization for line node */
+.line_node {
 	position: absolute;
 	top: 5px;
 	left: 10px;
@@ -87,12 +88,36 @@ h1 {
 	box-shadow: #219073 5px 5px 0px;
 }
 
-.node_label {
-	position: absolute;
-	top: 14px;
-	left: 56px;
-	right: 5px;
+.line_node_label {
+	padding-top: 14px;
+	padding-left: 56px;
+	padding-right: 5px;
+	height: 46px;
+	/*background: #2bb384;*/
+}
+.line_sub_box {
+	padding-left: 50px;
+}
+
+
+/* visualization for bits node */
+.bit_box {
+	display: inline-block;
+	width: 60px;
+}
+.bit {
+	position: static;
+	margin: 0px 0px 10px 10px;
+	width: 36px;
 	height: 36px;
+	background: #39ba6a;
+	border-radius: 10px;
+	box-shadow: #219073 5px 5px 0px;
+}
+
+.bit_label {
+	text-align: center;
+
 	/*background: #2bb384;*/
 }
 

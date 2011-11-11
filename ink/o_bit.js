@@ -11,6 +11,10 @@ var o_bit = function() {
 		
 		bit.type = "bit"
 		
+		// bit
+		bit.bit = ""
+		
+		
 		bit.id = 'b' + id++
 		
 		// namespace for things related to the 

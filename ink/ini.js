@@ -29,7 +29,7 @@ $( window ).load( ini.start )
 // will be called on parse button click
 ini.parse = function() {
 	
-	var source = $('#ink_box').val();
+	var source = $('#ink_box').html();
 	
 	parser.parse( source );
 	

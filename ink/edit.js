@@ -65,9 +65,19 @@ var edit = function() {
 	var keypress = function( e ) {
 		
 		// insert tab on tab key
-		if( e.keyCode != 9 ) return
+		if( e.keyCode == 9 ) {
+			e.preventDefault()
+			insert_char_at_caret( '\t' )
+		} else if( e.keyCode == 13 ) {
+			e.preventDefault()
+			insert_char_at_caret( '\n' )			
+		}
 			
-		e.preventDefault()
+		
+	}
+	
+
+	var insert_char_at_caret = function( char ) {
 		
 		var sel = window.getSelection()	
 
@@ -76,19 +86,13 @@ var edit = function() {
 		var text = htmlnode.textContent
 		var prev = text.substring(0,offset)
 		var post = text.substring(offset)
-		htmlnode.textContent = prev + '\t' + post
+		htmlnode.textContent = prev + char + post
 		
 		var range = document.createRange();
 		range.setStart(htmlnode, offset+1);
 		range.collapse(true);
 		sel.removeAllRanges();
-		sel.addRange(range);
-		
-	}
-	
-
-	var insert_char_at_caret = function() {
-		
+		sel.addRange(range);		
 		
 	}
 

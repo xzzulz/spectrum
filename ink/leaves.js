@@ -82,14 +82,19 @@ var leaves = function() {
 
 	var make_html_line_node = function( node ) {
 		
-		var label = node.item.source
+		var label = node.item.number + 1
 		var id = node.item.id
-				
+		var width = '110'
+		
+			
 		// html for line node
-		var html = '<div id="box_{id}" class="line_box">'
-		+ '<div id="node_{id}" class="line_node"></div>'
-		+ '<div id="node_label_{id}" class="line_node_label">{label}</div>'
-		+ '<div class="line_sub_box"></div>'
+		var html = ''
+		+ '<div id="box_{id}" class="line_box">'
+		+ 	'<div id="node_{id}" class="line_node">'
+		+ 		'<div id="node_label_{id}" class="line_node_label">{label}</div>'
+		+ 	'</div>'
+		+	'<div class="line_weight" style="width:{width}px"></div>'
+		+ 	'<div class="line_sub_box"></div>'
 		+ '</div>'
 		
 		// assign the id and label
@@ -98,6 +103,7 @@ var leaves = function() {
 			.replace( '{id}', id )
 			.replace( '{id}', id )
 			.replace( '{label}', label )
+			.replace( '{width}', width )
 			
 		return html	
 	}
@@ -113,9 +119,11 @@ var leaves = function() {
 		console.log( 'node.bit: ' + node.item.bit )
 		
 		// html for bit node
-		var html = '<div id="box_{id}" class="bit_box">'
-		+ '<div id="node_{id}" class="bit"></div>'
-		+ '<div id="node_label_{id}" class="bit_label">{bit}</div>'
+		var html = ''
+		+ '<div id="box_{id}" class="bit_box">'
+		+ 	'<div id="node_{id}" class="bit">'
+		+ 		'<div id="node_label_{id}" class="bit_label">{bit}</div>'
+		+ 	'</div>'
 		+ '</div>'
 		
 		// assign the id and label
@@ -136,12 +144,15 @@ var leaves = function() {
 		var id = node.item.id
 		
 		console.log( 'node.bit: ' + node.bit )
-		
-		// html for bit node
-		var html = '<div id="box_{id}" class="bit_box">'
-		+ '<div id="node_{id}" class="bit_error"></div>'
-		+ '<div id="node_label_{id}" class="bit_label">{bit}</div>'
+
+		// html for bit error node
+		var html = ''
+		+ '<div id="box_{id}" class="bit_box">'
+		+ 	'<div id="node_{id}" class="bit_error">'
+		+ 		'<div id="node_label_{id}" class="bit_label">{bit}</div>'
+		+ 	'</div>'
 		+ '</div>'
+
 		
 		// assign the id and label
 		html = html

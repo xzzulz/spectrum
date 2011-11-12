@@ -4,11 +4,12 @@ okami parser
 v0.1
 
 A parser for simple expressions grammars.
-with an html visualization:
-[nzonbi.github.com/ink](http://nzonbi.github.com/ink)
-(the visualization in the link may be slightly out of date,  respect to the master branch)
+with an html visualization:  
+[nzonbi.github.com/ink](http://nzonbi.github.com/ink)  
+(the visualization in the link may be slightly 
+out of date, respect to the master branch)  
 
-MIT license.
+MIT license.  
 
 
 

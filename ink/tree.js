@@ -107,6 +107,27 @@ blue.tree = function() {
 			
 			return flat
 		}
+
+
+		// places nod as prev of nex
+		// nex must be sub of another.
+		// returns the inserted node
+		nod.before = function( nex ) {
+			
+			if( ! nex.top )
+				throw "parameter node is not a sub node in a tree"
+			
+			nod.next = nex
+			nod.prev = nex.prev
+			nod.top = nex.top
+			
+			if(nex.top.sub.first == nex)
+				nex.top.first = nod
+				
+			nex.top.n++
+			
+			return nod
+		}
 		
 		
 		return nod

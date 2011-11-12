@@ -25,10 +25,6 @@ var leaves = function() {
 	
 	// draws the tree in the view
 	pub.draw = function( tree ) {
-		
-		console.log( '=======================================================' )
-		console.log( '=======================================================' )
-		console.log( 'drawing the tree' )
 			
 		$( view.html_box ).empty()
 		
@@ -41,12 +37,6 @@ var leaves = function() {
 	
 	
 	var paint_node = function( node ) {
-		
-		console.log( 'paint node' )
-		console.log( 'node.item.id: ' + node.item.id )
-		console.log( 'node.item.type: ' + node.item.type )
-		console.log( 'node.top: ' + node.top.item )
-		
 		
 		if( node.top.item == 'root' ) {	
 			// node is a line
@@ -115,9 +105,7 @@ var leaves = function() {
 		
 		var bit = node.item.bit
 		var id = node.item.id
-		
-		console.log( 'node.bit: ' + node.item.bit )
-		
+
 		// html for bit node
 		var html = ''
 		+ '<div id="box_{id}" class="bit_box">'
@@ -142,8 +130,6 @@ var leaves = function() {
 		
 		var bit = 'error'
 		var id = node.item.id
-		
-		console.log( 'node.bit: ' + node.bit )
 
 		// html for bit error node
 		var html = ''

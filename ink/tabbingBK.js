@@ -27,7 +27,7 @@ var tabbing = function() {
 		
 		tree = par_tree
 		
-		break_bloks2()
+		break_bloks()
 		
 		return tree
 		
@@ -35,119 +35,6 @@ var tabbing = function() {
 	
 	
 	
-	
-	// path of bloks
-	var path = []
-	// current blok
-	var at_blok
-	// current tab lvl
-	var tab_lvl
-	
-	
-	var break_bloks2 = function() {
-		
-		// set starting tab level
-		tab_lvl = count_tabs( tree.sub.first )
-		// set starting blocks path
-		path.push( tree )
-		// set current blok
-		at_blok = tree
-		
-		tree.sub.each( tab_it )
-		
-		
-	}
-	
-	
-	
-	var tab_it = function( node ) {
-		
-		// count tabs of this node
-		var tabs = count_tabs( node )
-		
-		// if tabs increased
-		if( tabs > tab_lvl ) {
-			
-			// start blok
-			start_blok( node, tabs )
-			// set new tabs lvl
-			tab_lvl = tabs
-			
-		}else if ( tabs < tab_lvl ) {
-			
-			close_blok()
-		
-		}else if( tabs == tab_lvl ) {
-			if( node.top != at_blok ) {
-				node.rip()
-				at
-			}
-		}
-		
-	}
-
-
-
-	var start_blok = function( node, tabs ) {
-		
-		var blok = o_blok.new()
-		
-		blok.tabs = tabs
-		blok.source.line_from = node.item.number
-		
-		// now, where to put the new blok:
-		//
-		// blok		-> is the new, just created blok
-		// at_blok	-> is the current blok at tab_lvl
-		//
-		// if node was in the current blok,
-		// the new blok should go there
-		//
-		// if node was above current blok,
-		// the new blok must go at last sub
-		// of current blok
-		
-		// put the new blok in a node
-		var blok_node = blue.tree.node( blok )
-		
-		if( node.top == at_blok )
-			blok_node.before( node )
-		else
-			at_blok.sub.add( blok_node )
-		
-		// add the new blok to the current path
-		path.push( blok_node )
-		
-		// add the node to the blok
-		node.rip()
-		blok_node.sub.add( node )
-		
-		return blok_node
-	}
-
-	
-	
-	
-	var close_blok = function() {
-		
-	}
-	
-		
-	
-	
-	// count tabs at start of line
-	var count_tabs = function( line_node ) {
-		
-		var tabCount = 0
-		while( line_node.sub.at( tabCount ).item.bit == 'tab' ) 
-			tabCount++
-			
-		return tabCount
-	}
-	
-	
-
-	/*
 	
 	// break into blocks
 	// indentation based
@@ -174,8 +61,7 @@ var tabbing = function() {
 		tabs = 0;
 		// for each line
 		for( i=0; i<lines.length; i++ ) {
-		
-		
+			
 			line = lines[i]
 												
 			// count tabs at start of line
@@ -244,7 +130,7 @@ var tabbing = function() {
 	}
 	
 	
-	*/
+	
 	
 	
 

@@ -49,9 +49,9 @@ var parser = function() {
 		leaves.draw( tree )
 		
 			
-		//tree = tabbing.to_blocks( tokens_tree )
+		tabbing.to_blocks( tree )
 		
-		//console.log( tree )
+		console.log( tree )
 	}
 
 

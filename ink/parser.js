@@ -44,7 +44,10 @@ var parser = function() {
 		//leaves.draw( tree )	
 		
 		tree = tokenizer.tokenize( tree )
-
+		
+		console.log( tree )
+		
+		
 		// draw the tree
 		leaves.draw( tree )
 		

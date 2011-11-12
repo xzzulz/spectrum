@@ -70,6 +70,35 @@ var leaves = function() {
 
 
 
+	var make_html_group_node = function( node ) {
+		
+		var label = node.item.number + 1
+		var id = node.item.id
+		var width = '110'
+		
+			
+		// html for line node
+		var html = ''
+		+ '<div id="box_{id}" class="line_box">'
+		+ 	'<div id="node_{id}" class="line_node">'
+		+ 		'<div id="node_label_{id}" class="line_node_label">{label}</div>'
+		+ 	'</div>'
+		+	'<div class="line_weight" style="width:{width}px"></div>'
+		+ 	'<div class="line_sub_box"></div>'
+		+ '</div>'
+		
+		// assign the id and label
+		html = html
+			.replace( '{id}', id )
+			.replace( '{id}', id )
+			.replace( '{id}', id )
+			.replace( '{label}', label )
+			.replace( '{width}', width )
+			
+		return html	
+	}
+
+
 	var make_html_line_node = function( node ) {
 		
 		var label = node.item.number + 1

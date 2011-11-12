@@ -44,6 +44,7 @@ var tabbing = function() {
 	var tab_lvl
 	
 	
+	
 	var break_bloks2 = function() {
 		
 		// set starting tab level
@@ -53,20 +54,32 @@ var tabbing = function() {
 		// set current blok
 		at_blok = tree
 		
-		tree.sub.each( tab_it )
+		// get subs in array
+		var nodes = []
+		var get_sub = function( node ) { nodes.push( node ) }
+		tree.sub.each( get_sub )
 		
+		console.log( nodes )
+		
+		for( var i=0; i<nodes.length; i++ ) {
+			tab_it( nodes[i] )
+		}
 		
 	}
 	
 	
 	
 	var tab_it = function( node ) {
+		console.log( '===================')
+		console.log( 'tab_it ' + node.item.number )
 		
 		// count tabs of this node
 		var tabs = count_tabs( node )
 		
 		// if tabs increased
 		if( tabs > tab_lvl ) {
+			
+			console.log('start blok here')
 			
 			// start blok
 			start_blok( node, tabs )
@@ -75,12 +88,14 @@ var tabbing = function() {
 			
 		}else if ( tabs < tab_lvl ) {
 			
-			close_blok()
+			//close_blok()
 		
 		}else if( tabs == tab_lvl ) {
+			console.log('same tab level')
 			if( node.top != at_blok ) {
+				console.log('rip node')
 				node.rip()
-				at
+				at_blok.sub.add( node )
 			}
 		}
 		
@@ -110,19 +125,34 @@ var tabbing = function() {
 		// put the new blok in a node
 		var blok_node = blue.tree.node( blok )
 		
-		if( node.top == at_blok )
-			blok_node.before( node )
-		else
+		console.log( 'blok_node created: ' )
+		console.log( blok_node )
+		
+		
+		if( node.top == at_blok ) {
+			console.log( 'node.top == at_blok ' )
+			blok_node.put_before_of( node )
+		}else{
+			console.log( 'node.top != at_blok' )
 			at_blok.sub.add( blok_node )
+		}
+		
+		console.log( 'blok_node created: ' )
+		console.log( blok_node )
+		console.log( 'put before of: ' )
+		console.log( node )
 		
 		// add the new blok to the current path
 		path.push( blok_node )
+		// set the current blok
+		at_blok = blok_node
+		
 		
 		// add the node to the blok
 		node.rip()
 		blok_node.sub.add( node )
 		
-		return blok_node
+
 	}
 
 	

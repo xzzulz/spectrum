@@ -112,7 +112,7 @@ blue.tree = function() {
 		// places nod as prev of nex
 		// nex must be sub of another.
 		// returns the inserted node
-		nod.before = function( nex ) {
+		nod.put_before_of = function( nex ) {
 			
 			if( ! nex.top )
 				throw "parameter node is not a sub node in a tree"
@@ -121,10 +121,13 @@ blue.tree = function() {
 			nod.prev = nex.prev
 			nod.top = nex.top
 			
+			nex.prev.next = nod
+			nex.prev = nod
+						
 			if(nex.top.sub.first == nex)
-				nex.top.first = nod
+				nex.top.sub.first = nod
 				
-			nex.top.n++
+			nex.top.sub.n++
 			
 			return nod
 		}

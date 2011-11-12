@@ -12,7 +12,7 @@ var o_blok = function() {
 		blok.type = "blok"
 				
 		
-		blok.id = 'b' + id++
+		blok.id = 'bl' + id++
 		
 		// tabs lvl
 		blok.tabs = 0

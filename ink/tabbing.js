@@ -13,19 +13,19 @@ var tabbing = function() {
 	var pub = {}
 	
 	// input: lines of tokens
-	var lines
+	//var lines
 	
 	// output
-	var tree = []
+	var tree
 	
 	
 	
 	// process tabs in a tokens_tree, and 
 	// creates code blocks based on 
 	// indentation (tabs only)
-	pub.to_blocks = function( par_tokenized ) {
+	pub.to_blocks = function( par_tree ) {
 		
-		lines = par_tokenized.lines
+		tree = par_tree
 		
 		break_bloks()
 		

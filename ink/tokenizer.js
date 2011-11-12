@@ -119,8 +119,13 @@ var tokenizer = function() {
 		
 		var bit = o_bit.new()
 		
-		if( token_string == '\t' )
-			token_string = 'tab'
+		// if the token is tabs at start of line
+		if( token_string.substring(0,1) == '\t' ) {	
+			// process any number of tabs
+			for(var i=0; i<token_string.length; i++ )
+				add_token( node, 'tab', line_number, i, i )
+			return
+		}
 			
 		bit.bit = token_string
 				

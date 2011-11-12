@@ -38,9 +38,13 @@ var leaves = function() {
 	
 	var paint_node = function( node ) {
 		
-		if( node.top.item == 'root' ) {	
+		if( node.item.type == 'line' ) {	
 			// node is a line
 			var html = make_html_line_node( node )
+		
+		}else if( node.item.type == 'blok' ) {	
+			// node is a blok
+			var html = make_html_blok_node( node )
 		
 		}else if( node.item.type == 'bit' ) {
 			// node is a bit
@@ -55,12 +59,19 @@ var leaves = function() {
 		
 
 		
-		if( node.top.item == 'root' )
+		if( node.top.item == 'root' ) {
 			// append to root node
 			$( html ).appendTo( view.html_box )
-		else {
+			console.log('type: ' + node.item.type )
+			console.log('append to root')
+			
+		} else {
+
 			// append to top line node
-			var top_node_id = '#box_' + node.top.item.id + ' .line_sub_box'
+			var top_node_id = '#sub_' + node.top.item.id 
+			console.log('type: ' + node.item.type )
+			console.log('append to: ' + top_node_id)
+			
 			$( html ).appendTo( $( top_node_id ) )
 		}
 		
@@ -70,21 +81,22 @@ var leaves = function() {
 
 
 
-	var make_html_group_node = function( node ) {
+	var make_html_blok_node = function( node ) {
 		
-		var label = node.item.number + 1
+		console.log('make_html_blok_node')
+		console.log(node)
+		
 		var id = node.item.id
 		var width = '110'
-		
 			
 		// html for line node
 		var html = ''
 		+ '<div id="box_{id}" class="line_box">'
 		+ 	'<div id="node_{id}" class="line_node">'
-		+ 		'<div id="node_label_{id}" class="line_node_label">{label}</div>'
+		+ 		'<div id="node_label_{id}" class="line_node_label">blok</div>'
 		+ 	'</div>'
 		+	'<div class="line_weight" style="width:{width}px"></div>'
-		+ 	'<div class="line_sub_box"></div>'
+		+ 	'<div id="sub_{id}" class="sub_box"></div>'
 		+ '</div>'
 		
 		// assign the id and label
@@ -92,7 +104,7 @@ var leaves = function() {
 			.replace( '{id}', id )
 			.replace( '{id}', id )
 			.replace( '{id}', id )
-			.replace( '{label}', label )
+			.replace( '{id}', id )
 			.replace( '{width}', width )
 			
 		return html	
@@ -113,11 +125,12 @@ var leaves = function() {
 		+ 		'<div id="node_label_{id}" class="line_node_label">{label}</div>'
 		+ 	'</div>'
 		+	'<div class="line_weight" style="width:{width}px"></div>'
-		+ 	'<div class="line_sub_box"></div>'
+		+ 	'<div id="sub_{id}" class="sub_box"></div>'
 		+ '</div>'
 		
 		// assign the id and label
 		html = html
+			.replace( '{id}', id )
 			.replace( '{id}', id )
 			.replace( '{id}', id )
 			.replace( '{id}', id )

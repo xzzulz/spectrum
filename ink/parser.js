@@ -47,12 +47,12 @@ var parser = function() {
 		
 		console.log( tree )
 		
+			
+		tabbing.to_blocks( tree )
+		
 		
 		// draw the tree
 		leaves.draw( tree )
-		
-			
-		tabbing.to_blocks( tree )
 		
 		console.log( tree )
 	}

@@ -43,18 +43,7 @@ var parser = function() {
 		// draw the tree
 		//leaves.draw( tree )	
 		
-		console.log( '=============================================' )
-		console.log( tree )
-		console.log( '=============================================' )
-		
-		
 		tree = tokenizer.tokenize( tree )
-
-
-		console.log( '=============================================' )
-		console.log( tree )
-		console.log( '=============================================' )
-
 
 		// draw the tree
 		leaves.draw( tree )

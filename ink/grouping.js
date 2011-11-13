@@ -18,7 +18,7 @@ var grouping = function() {
 	var tree
 
 	// list of bloks in the tree
-	var groups = []
+	var bloks = []
 
 	
 	// operators

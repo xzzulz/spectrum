@@ -51,6 +51,8 @@ var parser = function() {
 		tabbing.to_blocks( tree )
 		
 		
+		grouping.group( tree )
+		
 		// draw the tree
 		leaves.draw( tree )
 		

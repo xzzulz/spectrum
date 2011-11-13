@@ -29,9 +29,9 @@ var parser = function() {
 		
 		console.log( source )
 		
-		
+		var root = { type: "root" }
 		// create tree top node
-		tree = pub.tree = blue.tree.node( 'root' )
+		tree = pub.tree = blue.tree.node( root )
 		
 		
 		// set view html container for nodes
@@ -44,14 +44,17 @@ var parser = function() {
 		//leaves.draw( tree )	
 		
 		tree = tokenizer.tokenize( tree )
-
+		
+		console.log( tree )
+		
+			
+		tabbing.to_blocks( tree )
+		
+		
 		// draw the tree
 		leaves.draw( tree )
 		
-			
-		//tree = tabbing.to_blocks( tokens_tree )
-		
-		//console.log( tree )
+		console.log( tree )
 	}
 
 

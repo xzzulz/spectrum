@@ -107,6 +107,30 @@ blue.tree = function() {
 			
 			return flat
 		}
+
+
+		// places nod as prev of nex
+		// nex must be sub of another.
+		// returns the inserted node
+		nod.put_before_of = function( nex ) {
+			
+			if( ! nex.top )
+				throw "not valid parameter, method put_before_of: parameter node is not a sub node in a tree"
+			
+			nod.next = nex
+			nod.prev = nex.prev
+			nod.top = nex.top
+			
+			nex.prev.next = nod
+			nex.prev = nod
+						
+			if(nex.top.sub.first == nex)
+				nex.top.sub.first = nod
+				
+			nex.top.sub.n++
+			
+			return nod
+		}
 		
 		
 		return nod
@@ -177,17 +201,34 @@ blue.tree = function() {
 			// validate index given
 			if( index < 0 )
 				throw "node insert failed, invalid index"
-			if( index > pub.n - 1 )
+			if( index > pub.n )
 				throw "node insert failed, given index exceeds valid places"
-				
-			pik = pub.at( index )
 			
+			// if insert at last+1, then just add
+			if( index == pub.n ) {
+				pub.top.add( sub )
+				return
+			}
+		
+			pik = pub.at( index )
+
 			sub.prev = pik.prev
 			sub.next = pik
-			pik.prev.next = sub
-			pik.prev = sub
+			
+			// if not inserting at first
+			if( pik.prev ) {
 
+				pik.prev.next = sub	
+			} else {
+				// inserting as first
+				pik.top.sub.first = sub
+
+			}
+			
+			pik.prev = sub
+			
 			sub.top = pub.nod
+			
 			
 			pub.n++
 			

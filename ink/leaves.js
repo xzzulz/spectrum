@@ -59,18 +59,14 @@ var leaves = function() {
 		
 
 		
-		if( node.top.item == 'root' ) {
+		if( node.top.item.type == 'root' ) {
 			// append to root node
 			$( html ).appendTo( view.html_box )
-			console.log('type: ' + node.item.type )
-			console.log('append to root')
 			
 		} else {
 
 			// append to top line node
 			var top_node_id = '#sub_' + node.top.item.id 
-			console.log('type: ' + node.item.type )
-			console.log('append to: ' + top_node_id)
 			
 			$( html ).appendTo( $( top_node_id ) )
 		}
@@ -82,9 +78,6 @@ var leaves = function() {
 
 
 	var make_html_blok_node = function( node ) {
-		
-		console.log('make_html_blok_node')
-		console.log(node)
 		
 		var id = node.item.id
 		var width = '110'

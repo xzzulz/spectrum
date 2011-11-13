@@ -27,7 +27,7 @@ var tabbing = function() {
 		
 		tree = par_tree
 		
-		break_bloks2()
+		break_bloks()
 		
 		return tree
 		
@@ -36,8 +36,9 @@ var tabbing = function() {
 	
 	
 	
-	// path of bloks
-	var path = []
+	// list of current nested bloks
+	// from root, to bottom
+	var path
 	// current blok
 	var at_blok
 	// current tab lvl
@@ -45,12 +46,25 @@ var tabbing = function() {
 	
 	
 	
-	var break_bloks2 = function() {
+	var break_bloks = function() {
 		
 		// set starting tab level
 		tab_lvl = count_tabs( tree.sub.first )
-		// set starting blocks path
-		path.push( tree )
+
+		// store the initial tab level in the root node
+		tree.item.tabs = tab_lvl
+		
+		console.log('break_bloks =====================================================================')
+		
+		// put root node at top of path
+		path = []
+
+
+		console.log( 'path: ' )
+		console.log( path )
+		
+		
+		
 		// set current blok
 		at_blok = tree
 		
@@ -69,8 +83,16 @@ var tabbing = function() {
 	
 	var tab_it = function( node ) {
 		
+		console.log('tab_it ===================================')
+
+		
 		// count tabs of this node
 		var tabs = count_tabs( node )
+		
+		console.log( 'counted tabs: ' + tabs )
+		
+		
+		
 		
 		// if tabs increased
 		if( tabs > tab_lvl ) {
@@ -82,13 +104,16 @@ var tabbing = function() {
 			
 		}else if ( tabs < tab_lvl ) {
 			
-			//close_blok()
+			tab_lvl = tabs
+			close_blok( node)
 		
 		}else if( tabs == tab_lvl ) {
+			
 			if( node.top != at_blok ) {
 				node.rip()
 				at_blok.sub.add( node )
 			}
+			
 		}
 		
 	}
@@ -96,6 +121,8 @@ var tabbing = function() {
 
 
 	var start_blok = function( node, tabs ) {
+		
+		console.log('           start blok')
 		
 		var blok = o_blok.new()
 		
@@ -124,7 +151,7 @@ var tabbing = function() {
 		}
 				
 		// add the new blok to the current path
-		path.push( blok_node )
+		path.push( at_blok )
 		// set the current blok
 		at_blok = blok_node
 		
@@ -136,24 +163,57 @@ var tabbing = function() {
 
 	}
 
+
 	
-	
-	
-	var close_blok = function() {
+	var close_blok = function( node ) {
+		
+		console.log('           close blok')
+		console.log('path is:')
+		console.log( path )
+		console.log( 'tab_lvl: ' + tab_lvl )
+		
+		// current blok has ended
+		// remove it from path
+		at_blok = path.pop()
+		// set new current blok
+		// the last in the past list
+		
+		
+		// continue removing bloks, until new tab level
+		// is reached
+		while( tab_lvl < at_blok.item.tabs ) {
+			console.log( 'tab_lvl: ' + tab_lvl +' < ' + at_blok.item.tabs + ' tab_lvl ' )
+			console.log( 'path.pop()' )
+			
+			// blok ended, remove from path
+			at_blok = path.pop()
+
+		}
+		
+		tab_lvl = at_blok.item.tabs
+		
+		console.log( 'done, tab_lvl: ' + tab_lvl  )
+		console.log( path )
+		console.log( at_blok )
+		
+		if( node.top != at_blok ) {
+			node.rip()
+			at_blok.sub.add( node )
+		}
 		
 	}
 	
 		
-	
+
 	
 	// count tabs at start of line
 	var count_tabs = function( line_node ) {
-		
-		var tabCount = 0
-		while( line_node.sub.at( tabCount ).item.bit == 'tab' ) 
-			tabCount++
+				
+		var tab_count = 0
+		while( line_node.sub.at( tab_count ).item.bit == 'tab' ) 
+			tab_count++
 			
-		return tabCount
+		return tab_count
 	}
 	
 	

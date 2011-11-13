@@ -115,7 +115,7 @@ blue.tree = function() {
 		nod.put_before_of = function( nex ) {
 			
 			if( ! nex.top )
-				throw "parameter node is not a sub node in a tree"
+				throw "not valid parameter, method put_before_of: parameter node is not a sub node in a tree"
 			
 			nod.next = nex
 			nod.prev = nex.prev

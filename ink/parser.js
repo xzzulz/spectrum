@@ -29,9 +29,9 @@ var parser = function() {
 		
 		console.log( source )
 		
-		
+		var root = { type: "root" }
 		// create tree top node
-		tree = pub.tree = blue.tree.node( 'root' )
+		tree = pub.tree = blue.tree.node( root )
 		
 		
 		// set view html container for nodes

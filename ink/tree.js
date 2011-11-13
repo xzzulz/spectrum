@@ -201,17 +201,34 @@ blue.tree = function() {
 			// validate index given
 			if( index < 0 )
 				throw "node insert failed, invalid index"
-			if( index > pub.n - 1 )
+			if( index > pub.n )
 				throw "node insert failed, given index exceeds valid places"
-				
-			pik = pub.at( index )
 			
+			// if insert at last+1, then just add
+			if( index == pub.n ) {
+				pub.top.add( sub )
+				return
+			}
+		
+			pik = pub.at( index )
+
 			sub.prev = pik.prev
 			sub.next = pik
-			pik.prev.next = sub
-			pik.prev = sub
+			
+			// if not inserting at first
+			if( pik.prev ) {
 
+				pik.prev.next = sub	
+			} else {
+				// inserting as first
+				pik.top.sub.first = sub
+
+			}
+			
+			pik.prev = sub
+			
 			sub.top = pub.nod
+			
 			
 			pub.n++
 			

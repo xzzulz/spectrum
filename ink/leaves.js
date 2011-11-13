@@ -50,7 +50,7 @@ var leaves = function() {
 			// node is a bit
 			html = make_html_bit_node( node )
 				
-		}else if( node.item.type == 'bit error' ) {
+		}else if( node.item.type == 'error' ) {
 			// node is a bit
 			html = make_html_bit_error_node( node )
 				

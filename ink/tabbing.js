@@ -54,17 +54,12 @@ var tabbing = function() {
 		// store the initial tab level in the root node
 		tree.item.tabs = tab_lvl
 		
-		console.log('break_bloks =====================================================================')
+		console.log('break_bloks ============================================')
 		
 		// put root node at top of path
 		path = []
 
 
-		console.log( 'path: ' )
-		console.log( path )
-		
-		
-		
 		// set current blok
 		at_blok = tree
 		
@@ -83,16 +78,9 @@ var tabbing = function() {
 	
 	var tab_it = function( node ) {
 		
-		console.log('tab_it ===================================')
-
-		
 		// count tabs of this node
 		var tabs = count_tabs( node )
-		
-		console.log( 'counted tabs: ' + tabs )
-		
-		
-		
+			
 		
 		// if tabs increased
 		if( tabs > tab_lvl ) {
@@ -121,9 +109,7 @@ var tabbing = function() {
 
 
 	var start_blok = function( node, tabs ) {
-		
-		console.log('           start blok')
-		
+
 		var blok = o_blok.new()
 		
 		blok.tabs = tabs
@@ -166,12 +152,7 @@ var tabbing = function() {
 
 	
 	var close_blok = function( node ) {
-		
-		console.log('           close blok')
-		console.log('path is:')
-		console.log( path )
-		console.log( 'tab_lvl: ' + tab_lvl )
-		
+
 		// current blok has ended
 		// remove it from path
 		at_blok = path.pop()
@@ -182,19 +163,27 @@ var tabbing = function() {
 		// continue removing bloks, until new tab level
 		// is reached
 		while( tab_lvl < at_blok.item.tabs ) {
-			console.log( 'tab_lvl: ' + tab_lvl +' < ' + at_blok.item.tabs + ' tab_lvl ' )
-			console.log( 'path.pop()' )
-			
 			// blok ended, remove from path
 			at_blok = path.pop()
-
+		}
+		
+		// invalid indentation
+		// insert error node
+		if( tab_lvl > at_blok.item.tabs ) {
+						
+			//insert error node
+			var bit = o_bit.new()
+			bit.type = "error"
+			bit.source.line = node.item.number
+			bit.bit = 'indentation error'
+			
+			var error_node = blue.tree.node( bit )
+			
+			node.sub.insert( error_node, 0 )
+			
 		}
 		
 		tab_lvl = at_blok.item.tabs
-		
-		console.log( 'done, tab_lvl: ' + tab_lvl  )
-		console.log( path )
-		console.log( at_blok )
 		
 		if( node.top != at_blok ) {
 			node.rip()
@@ -208,7 +197,9 @@ var tabbing = function() {
 	
 	// count tabs at start of line
 	var count_tabs = function( line_node ) {
-				
+		
+		if( line_node.sub.n == 0 ) return 0
+		
 		var tab_count = 0
 		while( line_node.sub.at( tab_count ).item.bit == 'tab' ) 
 			tab_count++
@@ -216,9 +207,6 @@ var tabbing = function() {
 		return tab_count
 	}
 	
-	
-
-
 
 
 

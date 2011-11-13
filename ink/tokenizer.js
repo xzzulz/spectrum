@@ -72,7 +72,7 @@ var tokenizer = function() {
 		
 		// ignore empty or comment lines
 		if( is_not_code( source ) )
-			return 
+			node.rip() 
 	
 				
 		from = 0
@@ -158,7 +158,7 @@ var tokenizer = function() {
 			
 			//insert error node
 			var bit = o_bit.new()
-			bit.type = "bit error"
+			bit.type = "error"
 			bit.source.line = line_number
 			bit.source.from = from
 			bit.source.to = to
@@ -190,7 +190,7 @@ var tokenizer = function() {
 		
 		//insert error node
 		var bit = o_bit.new()
-		bit.type = "bit error"
+		bit.type = "error"
 		bit.source.line = line_number
 		bit.source.from = from
 		bit.source.to = source.length - 1

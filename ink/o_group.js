@@ -1,33 +1,33 @@
 
 
-var o_grup = function() {
+var o_group = function() {
 	
 	// public space
 	var pub = {}
 	
 	pub.new = function() {
 	
-		var grup = {}
+		var group = {}
 		
-		grup.type = "grup"
+		group.type = "group"
 				
 		
-		grup.id = 'g' + id++
+		group.id = 'g' + id++
 		
 		// namespace for things related to the 
 		// original source code
-		grup.source = {}
+		group.source = {}
 		
 		// original pos in source
 		// line and char index (including)
-		grup.source.line_from
-		grup.source.from
+		group.source.line_from
+		group.source.from
 		
-		grup.source.line_to
-		grup.source.to
+		group.source.line_to
+		group.source.to
 		
 		
-		return bit
+		return group
 	
 	}
 	

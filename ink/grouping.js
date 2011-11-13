@@ -18,7 +18,7 @@ var grouping = function() {
 	var tree
 
 	// list of bloks in the tree
-	var bloks = []
+	var bloks
 
 	
 	// operators
@@ -32,12 +32,16 @@ var grouping = function() {
 		
 		tree = par_tree
 		
+		bloks = []
+		
 		// root is the first blok
 		bloks.push( tree ) 
 		
 		// collect list of blok nodes in the tree
 		tree.walk( grab_bloks ) 
 		
+		console.log( 'bloks:' )
+		console.log( bloks )
 		
 		for( var i=0; i<bloks.length; i++ ) {
 
@@ -51,7 +55,7 @@ var grouping = function() {
 	// grab blok nodes
 	var grab_bloks = function( node ) {
 		
-		if( node.item.type = 'blok' )
+		if( node.item.type == 'blok' )
 			bloks.push( node )
 	}
 	
@@ -67,35 +71,47 @@ var grouping = function() {
 	// work on subnodes of bloks
 	var group_blok = function( blok ) {
 		
+		console.log( 'group blok: ========================= ' )
+		console.log( blok )
+		
 		group_lvl = 0
 		groups = []
 		at_group = blok
 		
-		blok.sub.each( scan_bit )
+		blok.sub.each( get_lines )
 		
 	}
 
 
+	var get_lines = function( node ) {
+	
+		if( node.item.type == 'line' )
+			node.sub.each( scan_node )
+	}
 
-	var scan_bit = function( node ) {
-				
+
+	var scan_node = function( node ) {
+		
+		console.log( 'scan_node: ' + node.item.type )
+		
 		if( node.item.type != 'bit' ) return
 		
-		var bit = node.item.bit.bit
+		var bit = node.item.bit
 		
-		if( bit == group_start )
+		if( bit == group_start ) 
 			start_group( node )
-		
-		else if( bit == group_end ) {
-			end_group( node )	
 			
-		}
+		else if( bit == group_end ) 
+			end_group( node )	
+	
 	}	
 	
 	
 	
 	
 	var start_group = function( node ) {
+
+		console.log('start_group')
 
 		var group = o_group.new()
 		
@@ -142,10 +158,11 @@ var grouping = function() {
 
 	var end_group = function( node ) {
 		
+		console.log('end_group')
+		
 		if( group_lvl == 0 )
 			add_error()
-		
-		
+
 		// current blok has ended
 		// remove it from path
 		at_group = path.pop()

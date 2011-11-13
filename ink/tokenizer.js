@@ -32,7 +32,7 @@ var tokenizer = function() {
 	
 	
 	// regexs
-	var rgx_tokens = /^\t+|one|two|three|four|five|six/g
+	var rgx_tokens = /^\t+|one|two|three|four|five|six|\(|\)/g
 	var rgx_invalid_spacing = /[^\s\n]/
 	var rgx_valid_ending = /^\s*(\:\:.*)?$/
 

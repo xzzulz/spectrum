@@ -131,6 +131,31 @@ blue.tree = function() {
 			
 			return nod
 		}
+
+
+
+		// places nod as next of pre
+		// pre must be sub of another.
+		// returns the inserted node
+		nod.put_after_of = function( pre ) {
+			
+			if( ! pre.top )
+				throw "not valid parameter, method put_after_of: parameter node is not a sub node in a tree"
+			
+			nod.next = pre.next
+			nod.prev = pre
+			nod.top = pre.top
+			
+			pre.next.prev = nod
+			pre.next = nod
+						
+			if(pre.top.sub.last == pre)
+				pre.top.sub.last = nod
+				
+			pre.top.sub.n++
+			
+			return nod
+		}
 		
 		
 		return nod

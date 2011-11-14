@@ -42,7 +42,7 @@ var grouping = function() {
 				
 		for( var i=0; i<bloks.length; i++ ) {
 
-			group_blok( bloks[i] )
+			process_blok( bloks[i] )
 		}
 		
 	}
@@ -79,32 +79,170 @@ var grouping = function() {
 	// inside the group will be pasted.
 	//var at_line	
 	
-	// work on subnodes of bloks
-	var group_blok = function( blok ) {
+	
+	// 
+	var process_blok = function( blok ) {
 		
 		console.log( 'group blok: ===============================' )
 		console.log( blok )
-		
+		console.log( 'group blok: ===============================' )
+				
 		group_lvl = 0
 		groups = []
 		at_group = blok
 		
-		var subs = blok.sub.list()
-		
-		for(var i=0; i<subs.length; i++)
-			get_lines( subs[i] )
+		// "expand" all lines in the blok
+		var node = blok.sub.first
+
+		while( node ) {
+			
+			if( node.item.type == 'line' )
+				expand_line( node )
+			node = node.next
+		}	
 
 	}
 
 
-	// get the lines of the current blok
-	var get_lines = function( node ) {
+	// find group operators in a line.
+	// splits the line at these points
+	var expand_line = function( line_node ) {
 		
-		// if the node is not in the current
-		// insertion group, rip it
-		// and paste to the current insertion group
-		if( node.top != at_group )
-			at_group.sub.add( node.rip() )
+		var pik = line_node.sub.first
+		var bit = ''
+		var line_rest
+		
+		if( line_node.sub.n == 1 ) return
+		
+		while( pik ) {
+						
+			bit = pik.item.bit
+			
+			console.log('bit: ' + bit)
+			
+			if( bit == group_start || bit == group_end ) {
+				
+				line_rest = after_op( line_node, pik )
+				if( line_rest )
+					line_rest.put_after_of( line_node )
+				
+				line_op = grab_operator( line_node, pik )
+				if( line_op )
+					line_op.put_after_of( line_node )
+			}
+			
+			pik = pik.next
+			
+		}
+	}
+
+
+
+
+	// get rest of line after grouping operator
+	var after_op = function( line_node, node ) {		
+		
+		if( line_node.sub.last == node )
+			return null
+		
+		// update source code data
+		
+		// base data
+		var split_index = node.item.source.from
+		var sourcecode = line_node.item.source.code
+		var line_number = line_node.item.number
+
+
+		// create a new line with the rest of the sourcecode
+		var line_rest = o_line.new( line_number, '' )
+		line_rest.source.from = split_index + 1
+		line_rest.source.to = line_node.item.source.to
+		line_rest.source.code = sourcecode.substring( split_index + 1 )
+		
+		var line_rest_node = blue.tree.node( line_rest )
+		
+		line_node.item.source.to = split_index - 1
+		line_node.item.source.code = sourcecode.substring( 0, split_index )
+		
+		// move corresponding nodes from line_one 
+		// to line_rest
+		var move_node = node.next
+		var jump_node = node.next
+
+		while( jump_node ) {
+			jump_node = jump_node.next
+			line_rest_node.sub.add( move_node.rip() )
+			move_node = jump_node
+		}
+		
+		return line_rest_node
+	}
+
+
+
+
+	var grab_operator = function( line_node, node ) {
+		
+		if( line_node.sub.n == 1 ) 
+			return null
+			
+		// create a new line for the groupin operator
+		
+		// base data
+		var split_index = node.item.source.from
+		var sourcecode = line_node.item.source.code
+		var line_number = line_node.item.number
+
+		
+		var line_op = o_line.new( line_number, '' )
+		line_op.source.from = split_index
+		line_op.source.to = split_index
+		line_op.source.code = node.item.bit
+		
+		var line_op_node = blue.tree.node( line_op )
+
+		line_op_node.sub.add( node.rip() )
+		
+		return line_op_node
+		
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	// process a node in a blok
+	var process_blok_sub = function( node ) {
+		
+		
+		var pik = node.sub.first
+		
+		while( pik ) {
+
+			// if the node is not in the current
+			// insertion group, rip it
+			// and paste to the current insertion group
+			if( node.top != at_group )
+				at_group.sub.add( node.rip() )			
+			
+		}
+		
+
 		
 		
 		// scan nodes in a line
@@ -256,7 +394,7 @@ var grouping = function() {
 	}
 	
 
-
+/*
 	// split a line in two at node, and returns
 	// the both pieces in an object
 	var split_line = function( line_node, node ) {
@@ -290,17 +428,18 @@ var grouping = function() {
 		
 		return { first: line_node, last: line_two_node }
 	}
-
+*/
 
 
 
 	var end_group = function( node ) {
 		
-		/*
+		
 		console.log('end_group')
 		console.log( 'node:' )
 		console.log( node )
-		//return
+		
+		return
 		
 		
 		if( group_lvl == 0 ) throw 'close group operator error'
@@ -368,7 +507,7 @@ var grouping = function() {
 		// remove and discard the open group operator bit node
 		node.rip()
 		
-		*/ 
+		
 		
 	}
 

@@ -45,6 +45,10 @@ var leaves = function() {
 		}else if( node.item.type == 'blok' ) {	
 			// node is a blok
 			var html = make_html_blok_node( node )
+
+		}else if( node.item.type == 'group' ) {	
+			// node is a group
+			var html = make_html_group_node( node )
 		
 		}else if( node.item.type == 'bit' ) {
 			// node is a bit
@@ -102,6 +106,40 @@ var leaves = function() {
 			
 		return html	
 	}
+
+
+
+
+	var make_html_group_node = function( node ) {
+		
+		var id = node.item.id
+		var width = '110'
+			
+		// html for line node
+		var html = ''
+		+ '<div id="box_{id}" class="line_box">'
+		+ 	'<div id="node_{id}" class="line_node">'
+		+ 		'<div id="node_label_{id}" class="line_node_label">grup</div>'
+		+ 	'</div>'
+		+	'<div class="line_weight" style="width:{width}px"></div>'
+		+ 	'<div id="sub_{id}" class="sub_box"></div>'
+		+ '</div>'
+		
+		// assign the id and label
+		html = html
+			.replace( '{id}', id )
+			.replace( '{id}', id )
+			.replace( '{id}', id )
+			.replace( '{id}', id )
+			.replace( '{width}', width )
+			
+		return html	
+	}
+
+
+
+
+
 
 
 	var make_html_line_node = function( node ) {

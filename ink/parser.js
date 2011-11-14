@@ -45,11 +45,12 @@ var parser = function() {
 		
 		tree = tokenizer.tokenize( tree )
 		
-		console.log( tree )
 		
 			
 		tabbing.to_blocks( tree )
 		
+		
+		grouping.group( tree )
 		
 		// draw the tree
 		leaves.draw( tree )

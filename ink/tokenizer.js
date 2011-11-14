@@ -32,7 +32,7 @@ var tokenizer = function() {
 	
 	
 	// regexs
-	var rgx_tokens = /^\t+|one|two|three|four|five|six/g
+	var rgx_tokens = /^\t+|one|two|three|four|five|six|\(|\)/g
 	var rgx_invalid_spacing = /[^\s\n]/
 	var rgx_valid_ending = /^\s*(\:\:.*)?$/
 
@@ -67,7 +67,7 @@ var tokenizer = function() {
 		var o_line = node.item
 		
 
-		var source = o_line.source
+		var source = o_line.source.code
 		var line_number = o_line.number
 		
 		// ignore empty or comment lines

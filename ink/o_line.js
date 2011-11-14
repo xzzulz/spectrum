@@ -17,12 +17,14 @@ var o_line = function() {
 		// zero base
 		lin.number = number
 
-		lin.source = source
+		lin.source = {}
+		
+		lin.source.code = source
 		
 		// character positions of line limits
 		// in original source line
-		lin.from = 0
-		lin.to = source.length - 1
+		lin.source.from = 0
+		lin.source.to = source.length - 1
 		
 		return lin
 	

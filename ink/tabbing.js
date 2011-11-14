@@ -53,9 +53,7 @@ var tabbing = function() {
 
 		// store the initial tab level in the root node
 		tree.item.tabs = tab_lvl
-		
-		console.log('break_bloks ============================================')
-		
+
 		// put root node at top of path
 		path = []
 

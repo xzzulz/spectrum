@@ -121,13 +121,42 @@ blue.tree = function() {
 			nod.prev = nex.prev
 			nod.top = nex.top
 			
-			nex.prev.next = nod
+			if( nex.prev )
+				nex.prev.next = nod
+				
 			nex.prev = nod
 						
 			if(nex.top.sub.first == nex)
 				nex.top.sub.first = nod
 				
 			nex.top.sub.n++
+			
+			return nod
+		}
+
+
+
+		// places nod as next of pre
+		// pre must be sub of another.
+		// returns the inserted node
+		nod.put_after_of = function( pre ) {
+			
+			if( ! pre.top )
+				throw "not valid parameter, method put_after_of: parameter node is not a sub node in a tree"
+			
+			nod.next = pre.next
+			nod.prev = pre
+			nod.top = pre.top
+			
+			if( pre.next )
+				pre.next.prev = nod
+				
+			pre.next = nod
+						
+			if(pre.top.sub.last == pre)
+				pre.top.sub.last = nod
+				
+			pre.top.sub.n++
 			
 			return nod
 		}
@@ -245,6 +274,17 @@ blue.tree = function() {
 				do_on_each( node )
 				node = node.next
 			}
+			
+		}
+
+		// returns array of subs 
+		pub.list = function() {
+			
+			var list = []
+			var grab = function( node ) { list.push( node ) }
+			pub.each( grab )
+			
+			return list
 			
 		}
 		

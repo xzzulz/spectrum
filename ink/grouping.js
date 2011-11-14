@@ -57,27 +57,8 @@ var grouping = function() {
 	}
 	
 	
-	// counter of opened groups nodes in current blok
-	var group_lvl
-	
-	// list (array) of references to nodes of  
-	// groups, in current blok.
-	// the current group is not included in the list
-	var groups
-	
-	
-	// insertion point
-	// group -> line
-	
-	
-	// current insertion group node. 
-	// this where lines of bits inside 
-	// the group will be pasted.
-	var at_group
 
-	// current insertion line node. this where bits nodes 
-	// inside the group will be pasted.
-	//var at_line	
+
 	
 	
 	// 
@@ -214,6 +195,18 @@ var grouping = function() {
 
 
 
+	// counter of opened groups nodes in current blok
+	var group_lvl
+	
+	// list (array) of references to nodes of  
+	// groups, in current blok.
+	// the current group is not included in the list
+	var groups
+	
+	// current insertion group node. 
+	// this where lines of bits inside 
+	// the group will be pasted.
+	var at_group
 
 
 	var make_groups = function ( blok ) {
@@ -282,8 +275,10 @@ var grouping = function() {
 
 	var end_group = function( node ) {
 		
-		if( group_lvl == 0 ) 
-			throw 'close group operator error on line ' + node.item.number
+		if( group_lvl == 0 ) {
+			error_bit( node )
+			return
+		}
 		
 		// move up in the groups hierarchy
 		at_group = groups.pop()
@@ -294,6 +289,21 @@ var grouping = function() {
 		node.rip()
 	}
 
+
+	//insert error node
+	var error_bit = function( node ) {
+		
+		var bit = o_bit.new()
+		bit.type = "error"
+		bit.source.line = node.item.source.line
+		bit.source.from = node.item.source.from
+		bit.source.to = node.item.source.from
+		bit.bit = node.item.bit
+		
+		var error_node = blue.tree.node( bit )
+		error_node.put_after_of( node.sub.first )
+		
+	}
 
 
 	return pub

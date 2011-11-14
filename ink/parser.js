@@ -45,7 +45,6 @@ var parser = function() {
 		
 		tree = tokenizer.tokenize( tree )
 		
-		console.log( tree )
 		
 			
 		tabbing.to_blocks( tree )

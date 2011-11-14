@@ -8,10 +8,10 @@ var edit = function() {
 
 	var source = ''
 	+ 'one three two one\n'
-	+ 'six four\n'
+	+ 'six ( four\n'
 	+ '	two ( four one )\n'
 	+ '	five six\n'
-	+ 'one four\n'
+	+ 'one ) four\n'
 
 
 

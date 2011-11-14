@@ -82,13 +82,7 @@ var grouping = function() {
 	
 	// 
 	var process_blok = function( blok ) {
-		
-		console.log( 'group blok: ===============================' )
-		console.log( blok )
-		console.log( 'group blok: ===============================' )
 				
-
-		
 		// "expand" all grouping operators nodes in the blok
 		// ( splits grouping operators into single lines )
 		var node = blok.sub.first
@@ -232,17 +226,13 @@ var grouping = function() {
 		
 		
 		for( var i=0; i<nodes.length; i++ ) 
-			group_lines( nodes[i] )
+			group_nodes( nodes[i] )
 				
 	}
 
 
 
-	var group_lines = function( node ) {
-		
-		console.log( 'group_lines: ' + node.item.type )
-		
-		if( node.item.type != 'line' ) return
+	var group_nodes = function( node ) {
 		
 		
 		var bit = node.sub.first.item.bit

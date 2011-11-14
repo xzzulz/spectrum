@@ -67,7 +67,7 @@ var tokenizer = function() {
 		var o_line = node.item
 		
 
-		var source = o_line.source
+		var source = o_line.source.code
 		var line_number = o_line.number
 		
 		// ignore empty or comment lines

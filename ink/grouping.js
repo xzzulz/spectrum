@@ -39,10 +39,7 @@ var grouping = function() {
 		
 		// collect list of blok nodes in the tree
 		tree.walk( grab_bloks ) 
-		
-		console.log( 'bloks:' )
-		console.log( bloks )
-		
+				
 		for( var i=0; i<bloks.length; i++ ) {
 
 			group_blok( bloks[i] )
@@ -85,15 +82,18 @@ var grouping = function() {
 	// work on subnodes of bloks
 	var group_blok = function( blok ) {
 		
-		console.log( 'group blok: ========================= ' )
+		console.log( 'group blok: ===============================' )
 		console.log( blok )
 		
 		group_lvl = 0
 		groups = []
 		at_group = blok
 		
-		blok.sub.each( get_lines )
+		var subs = blok.sub.list()
 		
+		for(var i=0; i<subs.length; i++)
+			get_lines( subs[i] )
+
 	}
 
 
@@ -131,7 +131,7 @@ var grouping = function() {
 		// :: grouop start
 		if( bit == group_start ) 
 			start_group( node )
-		
+
 		// :: group end
 		else if( bit == group_end ) 
 			end_group( node )	
@@ -149,19 +149,22 @@ var grouping = function() {
 	
 	var start_group = function( node ) {
 
-		console.log('start_group')
-		
+		console.log( 'start_group' )
+		console.log( 'node:' )
+		console.log( node )
+		//return
 		
 		// create a new group node
 		
 		var group = o_group.new()
 		
-		group.source.line = node.item.source.line
+		group.source.line_from = node.item.number
 		group.source.from = node.item.source.from
 		
 		var group_node = blue.tree.node( group )
 		
 		
+		var previous_group = at_group
 		
 		// add the previous current group to the groups path
 		groups.push( at_group )
@@ -172,11 +175,18 @@ var grouping = function() {
 		// get the line node of the bit node
 		var line_node = node.top
 		
+		console.log('------------')
+		console.log('at_group.put_after_of( line_node )' )
+		
+		console.log('at_group:')
+		console.log( at_group)
+		console.log('line_node:')
+		console.log(line_node)
+		console.log('------------')
 		
 		// add the group node just after
 		// the line where the start operator is
 		at_group.put_after_of( line_node )
-		
 		
 		
 		// determine what to do with the line node
@@ -193,6 +203,7 @@ var grouping = function() {
 		// if the start group operator is at the start
 		// of the line, place the whole line in the group
 		else if( line_node.sub.first == node ) {
+			
 			at_group.sub.add( line_node.rip() )			
 		}
 
@@ -200,14 +211,35 @@ var grouping = function() {
 		// if the start group operator is at the end
 		// of the line, leave the line were it is
 		else if( line_node.sub.last == node ) {
-		
+
 		}
 		
 		
-		// else,add the splited line
-		else
-			at_group.sub.add( split_line( line_node, node ) )
+		// else, add the splited line
+		else {
+			
+			
+			
+			var line_parts = split_line( line_node, node )
+			console.log('---------------------')
+			console.log('split_line:')
+			console.log( line_node )
+			
+			console.log('first:')
+			console.log( line_parts.first )
+			
+			console.log('last:')
+			console.log( line_parts.last )
+			
+			console.log('---------------------')
+			
+			if( line_parts.first.sub.n == 0 )
+				line_parts.first.rip()
+			
+			if( line_parts.last.sub.n > 0 )
+				at_group.sub.add( line_parts.last )
 		
+		}
 		
 		// set the current line
 		//at_line = at_group.last
@@ -220,34 +252,43 @@ var grouping = function() {
 		// remove and discard the open group operator bit node
 		node.rip()
 
+		
 	}
 	
 
 
 	// split a line in two at node, and returns
-	// the last part
-	var split_line = function( line_one, node ) {
+	// the both pieces in an object
+	var split_line = function( line_node, node ) {
 		
-		// get node cahr index pos in source code
+		console.log('split_line:')
+		console.log( line_node )
+				
+		// get node char index pos in source code
 		var from = node.item.source.from
 		
-		line_one.to = from - 1
+		// the whole line will be transformed into the first piece
+		line_node.item.source.to = from - 1
 		
 		// create the new line
-		var line_two = o_line.new( line.one.number, '' )
-		line_two.from = from
-		line_two.to = line_one.to
-		line_two.source = line_one.source.substring( from )
+		var line_two = o_line.new( line_node.item.number, '' )
+		line_two.source.from = from
+		line_two.source.to = line_node.item.source.to
+		line_two.source = line_node.item.source.code.substring( from )
 		
 		var line_two_node = blue.tree.node( line_two )
 		
 		// move corresponding nodes from line_one 
 		// to line_two
 		var move_node = node
-		while( move_node = move_node.next )
+		var jump_node = node
+		while( move_node ) {
+			jump_node = jump_node.next
 			line_two_node.sub.add( move_node.rip() )
+			move_node = jump_node
+		}
 		
-		return line_two_node
+		return { first: line_node, last: line_two_node }
 	}
 
 
@@ -255,24 +296,80 @@ var grouping = function() {
 
 	var end_group = function( node ) {
 		
-		console.log('end_group')
-		
-		
-		
 		/*
-		if( group_lvl == 0 )
-			add_error()
+		console.log('end_group')
+		console.log( 'node:' )
+		console.log( node )
+		//return
+		
+		
+		if( group_lvl == 0 ) throw 'close group operator error'
+		
+		var line_node = node.top
+				
 
-		// current blok has ended
-		// remove it from path
-		at_group = path.pop()
-		// set new current blok
-		// the last in the past list
+		// set upper group as the new current group
+		var ended_group = at_group 
+		at_group = groups.pop()
+		
+		
+		
+		// determine what to do with the line node
+		
+		// if end group operator is alone in the line
+		// discard the line
+		if( line_node.sub.n == 1 ) {
+			
+			line_node.rip()
+			return
+		}
 
+		
+		// if the start group operator is at the end
+		// of the line, move the whole line to the just
+		// ended group
+		else if( line_node.sub.last == node ) {
+			ended_group.sub.add( line_node.rip() )	
+		}
+		
+				
+		// if the end group operator is at the start
+		// of the line, place the whole line after the group
+		else if( line_node.sub.first == node ) {
+			at_group.sub.add( line_node.rip() )
+		}
+
+
+
+		// else, the line must be splited
+		
+		
+		else {
+			
+			var line_parts = split_line( line_node, node )
+			
+			// the just ended group get the first part
+			if( line_parts.first.sub.n > 0 )
+				ended_group.sub.add( line_parts.first )
+			
+			// the new current group gets the last part
+			// just after the closed blok
+			if( line_parts.last.sub.n > 0 )
+				line_parts.last.put_after_of( ended_group )
+		
+		}
+
+
+		
+		// decrease groups nesting level
+		group_lvl--
+		
+		
+		// remove and discard the open group operator bit node
 		node.rip()
 		
-		group_lvl--
-		*/
+		*/ 
+		
 	}
 
 	

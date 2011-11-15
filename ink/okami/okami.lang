@@ -1,0 +1,153 @@
+:: okami lang
+::
+:: a test grammar with indentation
+:: based blocks
+
+
+number			[0-9\.]
+
+string			^".*"$
+str.ini			^".*$ n
+string.end		
+
+identifier		([a-zA-Z0-9]+)[^a-zA-Z0-9]
+
+obj.prop		e.e
+
+fun.exe			e!ss
+fun.exe			e!n
+fun.exe			e!t
+fun.exe			e!e
+
+obj.def			@b
+
+fun.def			!b
+
+if				e?e
+
+else			e/e
+
+assign			e:e
+
+ 
+
+ 
+ 
+:: tokens
+
+identifier: ([a-zA-Z0-9]+)[^a-zA-Z0-9]		:: single
+
+literal: _					:: single
+
+comment: ::.*$				:: single
+
+assigment: :				:: combinator
+
+if: ? 						:: combinator
+
+else: /						:: combinator (after if expr)
+
+loop: <>					:: pair left operator
+
+function: !					:: left side operator
+
+object: @					:: left side operator
+
+method: @!					:: left side operator
+
+dot: .						:: combinator
+
+getter: @!/					:: left side operator
+
+setter: @!#					:: left side operator
+
+private: *					:: left side operator
+
+this1: *					:: single
+
+this2: ~					:: single
+
+parents: ( )				:: grouping
+
+
+
+
+
+
+:: line continuation ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+:: string
+
+"abc
+def"
+
+:: math and boolean operators
+
+x+y
++z
+
+a + b +
+c
+
+a & b
+*c
+
+:: assigment
+
+a:
+4
+
+
+
+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::;
+:: block consumers
+
+:: these operators may consume sub blocks
+
+:: if ?
+
+?
+
+:: else
+
+/
+
+:: loop
+
+<> exp1 block
+
+:: function
+
+!
+
+:: object
+
+@
+
+:: method
+
+@!
+
+:: getter
+
+@!/
+
+:: setter
+
+@!#
+
+
+
+
+
+
+
+top: \+
+
+:: indentation whitespace
+
+_in: ^(\w)+\W+
+
+:: separation whitespace
+
+_: [^w](w)+[^w]

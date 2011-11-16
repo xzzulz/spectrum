@@ -220,7 +220,9 @@ var grouping = function() {
 		
 		for( var i=0; i<nodes.length; i++ ) 
 			group_nodes( nodes[i] )
-				
+		
+		if( group_lvl > 0 )
+			error_bit( nodes[i].sub.last )
 	}
 
 
@@ -301,8 +303,9 @@ var grouping = function() {
 		bit.bit = node.item.bit
 		
 		var error_node = blue.tree.node( bit )
-		error_node.put_after_of( node.sub.first )
 		
+		node.top.sub.add( error_node )
+
 	}
 
 

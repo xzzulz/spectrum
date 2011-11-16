@@ -4,33 +4,43 @@
 :: based blocks
 
 
+:: n			newline
+:: s			space
+:: t			tab
+:: e			expression
+:: b			block
+
+
 number			[0-9\.]
 
 string			^".*"$
 str.ini			^".*$ n
-string.end		
+string.end		^.*"
 
-identifier		([a-zA-Z0-9]+)[^a-zA-Z0-9]
+identifier		([a-zA-Z][a-zA-Z0-9]*)[^a-zA-Z0-9]
 
 obj.prop		e.e
+
 
 fun.exe			e!ss
 fun.exe			e!n
 fun.exe			e!t
-fun.exe			e!e
+fun.exe			e!e					>
+fun.exe			e!
 
 obj.def			@b
 
 fun.def			!b
 
-if				e?e
+if				e?e					>			
 
-else			e/e
+else			e/e					>
 
-assign			e:e
+assign			e:e					<
 
  
-
+			e:e:e
+			e?e?e
  
  
 :: tokens

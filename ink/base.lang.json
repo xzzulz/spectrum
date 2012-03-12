@@ -1,0 +1,96 @@
+
+
+
+
+tokenization
+expression data
+
+
+identifier:
+
+	/one|two|three|four|six/
+
+expr:
+	i
+
+dot operator
+
+	.
+	
+expr:
+	e.i
+	
+	
+	
+bang operator
+	!
+
+expr:
+	e!e
+	e!
+
+// definitions
+//
+// forms
+//
+// i identifier
+// e expression
+// f expression in square brackets [e]
+// o the operator
+
+
+okami.identities = {
+
+  "identifier": {
+    "id": "i"
+    "regex": "([a-zA-Z0-9]+)[^a-zA-Z0-9]"
+  },
+
+  "boolean": {
+    "id": "b"
+    "regex": "\+|\-"
+  },
+  
+  "number": {
+    "id": "n"
+    "regex": "\."
+  },
+  
+  "string": {
+    "id": "s"
+    "regex": "\."
+  }
+  
+}
+
+okami.operators = {
+
+  "dot": {
+    "symbol": "."
+    "regex": "\.",
+    "forms": [ "eoi", "eof" ]
+  },
+
+
+  "bang": {
+    "symbol": "!"
+    "regex": "!",
+    "forms": [ "eoi", "eof", "eo", "ob" ],
+    "forms": [
+      "union": [ "eoi", "eof" ],
+      "postfix": [ "eo" ],
+      "prefix": [ "ob" ],
+    ]
+  }
+  
+  
+}
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,138 @@
+Language definition notes
+
+
+
+
+tokenization
+expression data
+
+:: definitions ::
+
+  forms
+
+  i identifier
+
+  o operator
+  
+
+:: identifier
+
+id:         i
+pattern:   	([a-zA-Z][a-zA-Z0-9]+)
+
+
+  i    identifier
+  ix   identifier expression
+  e    expression
+  ae   assignable expression
+  
+  
+
+:::: operators
+
+
+:: dot operator
+
+	.
+	
+forms:
+	e.e     infix
+	
+spec:
+  e.i
+  e.ix
+
+
+:: assignment operator
+
+  :
+  
+forms
+  ae:e  
+
+	
+	
+:: bang operator
+	!
+
+forms:
+	e!e     infix        if prev can be e and next can be e
+	e!      postfix      if prev can be e
+  !e      prefix       ..
+  !       expr         else
+
+
+
+
+:: object operator
+  
+  @
+  
+forms:
+  @e      prefix
+  @       expr
+
+
+
+:: e
+
+  starts with 
+  identifier
+  prefix
+
+
+okami.identities = {
+
+  "identifier": {
+    "id": "i"
+    "regex": "([a-zA-Z0-9]+)[^a-zA-Z0-9]"
+  },
+
+  "boolean": {
+    "id": "b"
+    "regex": "\+|\-"
+  },
+  
+  "number": {
+    "id": "n"
+    "regex": "\."
+  },
+  
+  "string": {
+    "id": "s"
+    "regex": "\."
+  }
+  
+}
+
+okami.operators = {
+
+  "dot": {
+    "symbol": "."
+    "regex": "\.",
+    "forms": [ "eoi", "eof" ]
+  },
+
+
+  "bang": {
+    "symbol": "!"
+    "regex": "!",
+    "forms": [ "eoi", "eof", "eo", "ob" ],
+    "forms": [
+      "union": [ "eoi", "eof" ],
+      "postfix": [ "eo" ],
+      "prefix": [ "ob" ],
+    ]
+  }
+  
+  
+}
+
+
+
+
+
+
+
+
+

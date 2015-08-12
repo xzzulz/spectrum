@@ -1,4 +1,4 @@
-![spectrum parser](http://www.ozkeebo.com/stuff/img/spectrum-parser.svg)
+![spectrum parser](http://nzonbi.github.io/spectrum/spectrum_parser.svg)
 
 #spectrum parser
 
